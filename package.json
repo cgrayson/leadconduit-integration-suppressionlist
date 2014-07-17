@@ -1,0 +1,33 @@
+{
+  "name": "leadconduit-suppressionlist",
+  "version": "0.0.1",
+  "description": "LeadConduit integration with SuppressionList",
+  "main": "index.js",
+  "scripts": {
+    "test": "cake test",
+    "prepublish": "cake build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/activeprospect/leadconduit-integration-suppressionlist.git"
+  },
+  "author": "Taylor Brooks <taylor@activeprospect.com>",
+  "licenses": [
+    {
+      "type": "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International",
+      "url": "http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode"
+    }
+  ],
+  "engines": {
+    "node": ">0.10.26"
+  },
+  "dependencies": {
+    "timekeeper": "0.0.4",
+    "mime-content": ">=0.0.6"
+  },
+  "devDependencies": {
+    "coffee-script": ">= 1.7.0",
+    "mocha": ">= 1.17.0",
+    "chai": ">= 1.9.0"
+  }
+}
