@@ -13,9 +13,9 @@ request = (vars) ->
     { values: "#{values}" }
 request.variables = ->
   [
-    { name: 'suppressionlist.apikey',    description: 'SuppressionList API Key',                    type: 'string', required: true },
-    { name: 'suppressionlist.list_id',   description: 'SuppressionList List Id',                    type: 'string', required: true },
-    { name: 'suppressionlist.values',    description: 'Item(s) to be added to SuppressionList (comma separated)',     type: 'string', required: true }
+    { name: 'apikey',    description: 'SuppressionList API Key',                    type: 'string', required: true },
+    { name: 'list_id',   description: 'SuppressionList List Id',                    type: 'string', required: true },
+    { name: 'values',    description: 'Item(s) to be added to SuppressionList (comma separated)',     type: 'string', required: true }
   ]
 
 
