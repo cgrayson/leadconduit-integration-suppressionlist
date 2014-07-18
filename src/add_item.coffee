@@ -35,8 +35,8 @@ response.variables = ->
   [
     { name: 'outcome', type: 'string', description: 'Was the email sent? (\'success\' or \'error\')' },
     { name: 'reason', type: 'string', description: 'Error reason' },
-    { name: 'accepted', type: 'integer', description: 'the number of items added to the list'},
-    { name: 'rejected', type: 'integer', description: 'the number of items not added to the list'}
+    { name: 'accepted', type: 'number', description: 'the number of items added to the list'},
+    { name: 'rejected', type: 'number', description: 'the number of items not added to the list'}
   ]
 
 
