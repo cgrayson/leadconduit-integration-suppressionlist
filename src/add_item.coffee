@@ -3,7 +3,7 @@ mimecontent = require('mime-content')
 request = (vars) ->
   values = vars.values.split(', ').join('|')
 
-  url: "https://app.suppressionlist.com/#{vars.list_id}/items"
+  url: "https://app.suppressionlist.com/lists/#{vars.list_id}/items"
   method: 'POST'
   headers:
     'Content-Type': 'application/json'
