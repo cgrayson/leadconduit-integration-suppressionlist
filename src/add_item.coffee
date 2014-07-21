@@ -8,7 +8,7 @@ request = (vars) ->
   headers:
     'Content-Type': 'application/json'
     'Accept': 'application/json'
-    'Authorization': "Basic #{new Buffer("#{vars.apikey}:X").toString('base64')}"
+    'Authorization': "Basic #{new Buffer("X:#{vars.apikey}").toString('base64')}"
   body:
     values: values
 request.variables = ->

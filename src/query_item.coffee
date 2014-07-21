@@ -7,7 +7,7 @@ request = (vars) ->
   method: 'GET'
   headers:
     'Accept': 'application/json'
-    'Authorization': "Basic #{new Buffer(":X#{vars.apikey}").toString('base64')}"
+    'Authorization': "Basic #{new Buffer("X:#{vars.apikey}").toString('base64')}"
 
 request.variables = ->
   [
