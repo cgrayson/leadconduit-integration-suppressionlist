@@ -6,9 +6,8 @@ request = (vars) ->
   url: "https://app.suppressionlist.com/exists/#{list_ids}/#{vars.list_item}"
   method: 'GET'
   headers:
-    'Content-Type': 'application/json'
     'Accept': 'application/json'
-    'Authorization': "Basic #{new Buffer("#{vars.apikey}:X").toString('base64')}"
+    'Authorization': "Basic #{new Buffer(":X#{vars.apikey}").toString('base64')}"
 
 request.variables = ->
   [

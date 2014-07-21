@@ -16,6 +16,11 @@ describe 'Add List Item Request', ->
   it 'should accept JSON', ->
     assert.equal 'application/json', request.headers.Accept
 
+  it 'should have the correct body', ->
+    expected =
+      values: 'boilermakers@example.com|taylor@activeprospect.com'
+    assert.deepEqual expected, request.body
+
 
 describe 'Add List Item Response', ->
   it 'should parse JSON body', ->

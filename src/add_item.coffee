@@ -10,7 +10,7 @@ request = (vars) ->
     'Accept': 'application/json'
     'Authorization': "Basic #{new Buffer("#{vars.apikey}:X").toString('base64')}"
   body:
-    { values: "#{values}" }
+    values: values
 request.variables = ->
   [
     { name: 'apikey',    description: 'SuppressionList API Key',                    type: 'string', required: true },
