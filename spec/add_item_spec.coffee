@@ -8,7 +8,7 @@ describe 'Add List Item Request', ->
     request = integration.request(apikey: '1234', list_id: 'things', values: 'boilermakers@example.com, taylor@activeprospect.com')
 
   it 'should have url', ->
-    assert.equal 'https://app.suppressionlist.com/things/items', request.url
+    assert.equal 'https://app.suppressionlist.com/lists/things/items', request.url
 
   it 'should be get', ->
     assert.equal 'POST', request.method
