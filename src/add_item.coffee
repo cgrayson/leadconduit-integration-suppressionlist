@@ -33,10 +33,10 @@ response = (vars, req, res) ->
 
 response.variables = ->
   [
-    { name: 'outcome', type: 'string', description: 'Was the email sent? (\'success\' or \'error\')' },
-    { name: 'reason', type: 'string', description: 'Error reason' },
-    { name: 'accepted', type: 'number', description: 'the number of items added to the list'},
-    { name: 'rejected', type: 'number', description: 'the number of items not added to the list'}
+    { name: 'append.outcome', type: 'string', description: 'Was the email sent? (\'success\' or \'error\')' },
+    { name: 'append.reason', type: 'string', description: 'Error reason' },
+    { name: 'append.accepted', type: 'number', description: 'the number of items added to the list'},
+    { name: 'append.rejected', type: 'number', description: 'the number of items not added to the list'}
   ]
 
 

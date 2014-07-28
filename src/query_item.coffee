@@ -32,12 +32,12 @@ response = (vars, req, res) ->
 
 response.variables = ->
   [
-    { name: 'outcome', type: 'string', description: 'Was the email sent? (\'success\' or \'error\')' },
-    { name: 'reason', type: 'string', description: 'Error reason' },
-    { name: 'list_item', type: 'string', description: 'the lookup item'},
-    { name: 'found', type: 'boolean', description: 'is the lookup item found on any of the suppression lists?'},
-    { name: 'exists_in_lists', type: 'list', description: 'list of suppression lists the item was found within'},
-    { name: 'specified_lists', type: 'list', description: 'list of suppression lists that were queried'}
+    { name: 'query.outcome', type: 'string', description: 'Was the email sent? (\'success\' or \'error\')' },
+    { name: 'query.reason', type: 'string', description: 'Error reason' },
+    { name: 'query.list_item', type: 'string', description: 'the lookup item'},
+    { name: 'query.found', type: 'boolean', description: 'is the lookup item found on any of the suppression lists?'},
+    { name: 'query.exists_in_lists', type: 'list', description: 'list of suppression lists the item was found within'},
+    { name: 'query.specified_lists', type: 'list', description: 'list of suppression lists that were queried'}
   ]
 
 
