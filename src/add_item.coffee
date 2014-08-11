@@ -8,12 +8,12 @@ request = (vars) ->
   headers:
     'Content-Type': 'application/json'
     'Accept': 'application/json'
-    'Authorization': "Basic #{new Buffer("X:#{vars.apikey}").toString('base64')}"
+    'Authorization': "Basic #{new Buffer("X:#{vars.activeprospect.api_key}").toString('base64')}"
   body:
     JSON.stringify(values: values)
 request.variables = ->
   [
-    { name: 'apikey',    description: 'SuppressionList API Key',                    type: 'string', required: true },
+    { name: 'activeprospect.api_key',    description: 'SuppressionList API Key',                    type: 'string', required: true },
     { name: 'list_id',   description: 'SuppressionList List Id',                    type: 'string', required: true },
     { name: 'values',    description: 'Item(s) to be added to SuppressionList (comma separated)',     type: 'string', required: true }
   ]
@@ -25,7 +25,7 @@ response = (vars, req, res) ->
   if res.status != 200
     event = { outcome: 'error', reason: "SuppressionList error (#{res.status})" }
   else
-    event = JSON.parse(res.body)
+    event = body
     event.outcome = 'success'
     event.reason = null
 

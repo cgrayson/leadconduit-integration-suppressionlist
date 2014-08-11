@@ -7,11 +7,11 @@ request = (vars) ->
   method: 'GET'
   headers:
     'Accept': 'application/json'
-    'Authorization': "Basic #{new Buffer("X:#{vars.apikey}").toString('base64')}"
+    'Authorization': "Basic #{new Buffer("X:#{vars.activeprospect.api_key}").toString('base64')}"
 
 request.variables = ->
   [
-    { name: 'apikey',    description: 'SuppressionList API Key',                   type: 'string', required: true },
+    { name: 'activeprospect.api_key',    description: 'SuppressionList API Key',                   type: 'string', required: true },
     { name: 'list_ids',  description: 'SuppressionList List Id (comma separated)', type: 'string', required: true },
     { name: 'list_item', description: 'Item to be looked up (phone/email/etc.)',   type: 'string', required: true }
   ]
