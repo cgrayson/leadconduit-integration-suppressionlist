@@ -13,9 +13,8 @@ request = (vars) ->
     JSON.stringify(values: values)
 request.variables = ->
   [
-    { name: 'activeprospect.api_key',    description: 'SuppressionList API Key',                    type: 'string', required: true },
-    { name: 'list_id',   description: 'SuppressionList List Id',                    type: 'string', required: true },
-    { name: 'values',    description: 'Item(s) to be added to SuppressionList (comma separated)',     type: 'string', required: true }
+    { name: 'list_id',   description: 'SuppressionList List Id',                                  type: 'string', required: true },
+    { name: 'values',    description: 'Item(s) to be added to SuppressionList (comma separated)', type: 'string', required: true }
   ]
 
 

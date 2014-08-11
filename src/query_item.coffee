@@ -11,7 +11,6 @@ request = (vars) ->
 
 request.variables = ->
   [
-    { name: 'activeprospect.api_key',    description: 'SuppressionList API Key',                   type: 'string', required: true },
     { name: 'list_ids',  description: 'SuppressionList List Id (comma separated)', type: 'string', required: true },
     { name: 'list_item', description: 'Item to be looked up (phone/email/etc.)',   type: 'string', required: true }
   ]
