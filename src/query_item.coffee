@@ -26,17 +26,17 @@ response = (vars, req, res) ->
     event.outcome = 'success'
     event.reason = null
 
-  event
+  query_item: event
 
 
 response.variables = ->
   [
-    { name: 'query.outcome', type: 'string', description: 'Was the email sent? (\'success\' or \'error\')' },
-    { name: 'query.reason', type: 'string', description: 'Error reason' },
-    { name: 'query.list_item', type: 'string', description: 'the lookup item'},
-    { name: 'query.found', type: 'boolean', description: 'is the lookup item found on any of the suppression lists?'},
-    { name: 'query.exists_in_lists', type: 'list', description: 'list of suppression lists the item was found within'},
-    { name: 'query.specified_lists', type: 'list', description: 'list of suppression lists that were queried'}
+    { name: 'query_item.outcome', type: 'string', description: 'Was the email sent? (\'success\' or \'error\')' },
+    { name: 'query_item.reason', type: 'string', description: 'Error reason' },
+    { name: 'query_item.list_item', type: 'string', description: 'the lookup item'},
+    { name: 'query_item.found', type: 'boolean', description: 'is the lookup item found on any of the suppression lists?'},
+    { name: 'query_item.exists_in_lists', type: 'list', description: 'list of suppression lists the item was found within'},
+    { name: 'query_item.specified_lists', type: 'list', description: 'list of suppression lists that were queried'}
   ]
 
 

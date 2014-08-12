@@ -34,12 +34,13 @@ describe 'Query List Item Response', ->
             }
             """
     expected =
-      outcome: 'success'
-      reason: null
-      specified_lists: ["list_1", "list_2", "list_3"]
-      key: 'taylor@activeprospect.com'
-      found: true
-      exists_in_lists: ["list_2", "list_3"]
+      query_item:
+        outcome: 'success'
+        reason: null
+        specified_lists: ["list_1", "list_2", "list_3"]
+        key: 'taylor@activeprospect.com'
+        found: true
+        exists_in_lists: ["list_2", "list_3"]
     response = integration.response(vars, req, res)
     assert.deepEqual expected, response
 
@@ -58,7 +59,8 @@ describe 'Query List Item Response', ->
             }
             """
     expected =
-      outcome: 'error'
-      reason: 'SuppressionList error (400) No such account.'
+      query_item:
+        outcome: 'error'
+        reason: 'SuppressionList error (400) No such account.'
     response = integration.response(vars, req, res)
     assert.deepEqual expected, response

@@ -35,10 +35,11 @@ describe 'Add List Item Response', ->
             }
             """
     expected =
-      outcome: 'success'
-      reason: null
-      accepted: 2
-      rejected: 0
+      add_item:
+        outcome: 'success'
+        reason: null
+        accepted: 2
+        rejected: 0
     response = integration.response(vars, req, res)
     assert.deepEqual expected, response
 
@@ -56,7 +57,8 @@ describe 'Add List Item Response', ->
             }
             """
     expected =
-      outcome: 'error'
-      reason: 'SuppressionList error (400)'
+      add_item:
+        outcome: 'error'
+        reason: 'SuppressionList error (400)'
     response = integration.response(vars, req, res)
     assert.deepEqual expected, response

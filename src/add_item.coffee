@@ -28,14 +28,14 @@ response = (vars, req, res) ->
     event.outcome = 'success'
     event.reason = null
 
-  event
+  add_item: event
 
 response.variables = ->
   [
-    { name: 'append.outcome', type: 'string', description: 'Was the email sent? (\'success\' or \'error\')' },
-    { name: 'append.reason', type: 'string', description: 'Error reason' },
-    { name: 'append.accepted', type: 'number', description: 'the number of items added to the list'},
-    { name: 'append.rejected', type: 'number', description: 'the number of items not added to the list'}
+    { name: 'add_item.outcome', type: 'string', description: 'Was the email sent? (\'success\' or \'error\')' },
+    { name: 'add_item.reason', type: 'string', description: 'Error reason' },
+    { name: 'add_item.accepted', type: 'number', description: 'the number of items added to the list'},
+    { name: 'add_item.rejected', type: 'number', description: 'the number of items not added to the list'}
   ]
 
 
