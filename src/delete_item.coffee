@@ -35,7 +35,7 @@ response.variables = ->
     { name: 'delete_item.outcome', type: 'string', description: 'Was the email sent? (\'success\' or \'error\')' },
     { name: 'delete_item.reason', type: 'string', description: 'Error reason' },
     { name: 'delete_item.deleted', type: 'number', description: 'the number of items removed from the list'},
-    { name: 'delete_item.rejected', type: 'number', description: 'the number of items not removed the list'}
+    { name: 'delete_item.rejected', type: 'number', description: 'the number of items not removed from the list'}
   ]
 
 
