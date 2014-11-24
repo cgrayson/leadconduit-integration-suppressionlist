@@ -1,7 +1,8 @@
 mimecontent = require('mime-content')
 
 request = (vars) ->
-  list_ids = vars.list_ids.split(', ').join('|')
+  list_ids = vars.list_ids.split(',').map(( (v) -> v.trim() )).join('|')
+
 
   url: "https://app.suppressionlist.com/exists/#{list_ids}/#{vars.list_item}"
   method: 'GET'
