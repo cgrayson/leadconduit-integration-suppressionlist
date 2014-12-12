@@ -1,7 +1,7 @@
 mimecontent = require('mime-content')
 
 request = (vars) ->
-  values = vars.values.split(',').map(( (v) -> v.trim() )).join('|')
+  values = vars.values.split(',').map((v) -> v.trim()).join('|')
 
   url: "https://app.suppressionlist.com/lists/#{vars.list_id}/items/#{vars.values}"
   method: 'DELETE'
@@ -30,7 +30,7 @@ response = (vars, req, res) ->
 
 response.variables = ->
   [
-    { name: 'delete_item.outcome', type: 'string', description: 'Was SuppressionList data appended?' },
+    { name: 'delete_item.outcome', type: 'string', description: 'Was SuppressionList response data appended?' },
     { name: 'delete_item.reason', type: 'string', description: 'Error reason' },
     { name: 'delete_item.deleted', type: 'number', description: 'the number of items removed from the list'},
     { name: 'delete_item.rejected', type: 'number', description: 'the number of items not removed from the list'}

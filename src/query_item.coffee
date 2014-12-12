@@ -1,7 +1,7 @@
 mimecontent = require('mime-content')
 
 request = (vars) ->
-  list_ids = vars.list_ids.split(',').map(( (v) -> v.trim() )).join('|')
+  list_ids = vars.list_ids.split(',').map((v) -> v.trim()).join('|')
 
 
   url: "https://app.suppressionlist.com/exists/#{list_ids}/#{vars.values}"
@@ -34,7 +34,7 @@ response = (vars, req, res) ->
 
 response.variables = ->
   [
-    { name: 'query_item.outcome', type: 'string', description: 'Was SuppressionList data appended?' },
+    { name: 'query_item.outcome', type: 'string', description: 'Was SuppressionList response data appended?' },
     { name: 'query_item.reason', type: 'string', description: 'Error reason' },
     { name: 'query_item.found', type: 'boolean', description: 'is the lookup item found on any of the suppression lists?'},
     { name: 'query_item.found_in', type: 'array', description: 'list of suppression lists the item was found within'}
