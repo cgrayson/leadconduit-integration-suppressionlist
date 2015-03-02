@@ -15,9 +15,6 @@ describe 'Add List Item', ->
     it 'should be get', ->
       assert.equal 'POST', request.method
 
-    it 'should accept JSON', ->
-      assert.equal 'application/json', request.headers.Accept
-
     it 'should have the correct body', ->
       assert.equal '{"values":"boilermakers@example.com|taylor@activeprospect.com"}', request.body
 

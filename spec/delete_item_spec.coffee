@@ -15,9 +15,6 @@ describe 'Delete List Item', ->
     it 'should be delete', ->
       assert.equal 'DELETE', request.method
 
-    it 'should accept JSON', ->
-      assert.equal 'application/json', request.headers.Accept
-
 
   describe 'Response', ->
     it 'should parse JSON body', ->

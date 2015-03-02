@@ -12,11 +12,12 @@ describe 'Query List Item', ->
     it 'should have url', ->
       assert.equal 'https://app.suppressionlist.com/exists/seabass|things|more_things/boilermakers@example.com', request.url
 
+    it 'should set url with deprecated list_item variable', ->
+      request = integration.request(activeprospect: {api_key: '1234'}, list_ids: 'seabass', list_item: 'boilermakers@example.com')
+      assert.equal 'https://app.suppressionlist.com/exists/seabass/boilermakers@example.com', request.url
+
     it 'should be get', ->
       assert.equal 'GET', request.method
-
-    it 'should accept JSON', ->
-      assert.equal 'application/json', request.headers.Accept
 
 
   describe 'Response', ->
@@ -66,3 +67,25 @@ describe 'Query List Item', ->
           reason: 'SuppressionList error (400) No such account.'
       response = integration.response(vars, req, res)
       assert.deepEqual expected, response
+
+    it 'should return success outcome on not-found/404 response status', ->
+      res =
+        status: 404,
+        body: """
+              {
+              "specified_lists": ["list_1"],
+              "key": "taylor@swift.com",
+              "found": false,
+              "reason": null
+              }
+              """
+      expected =
+        query_item:
+          outcome: 'success'
+          found: false
+          reason: null
+          key: 'taylor@swift.com'
+          specified_lists: [ 'list_1' ]
+
+      response = integration.response({}, {}, res)
+      assert.deepEqual response, expected
