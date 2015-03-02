@@ -1,31 +1,26 @@
 mimecontent = require('mime-content')
+helper = require('./helper')
 
 request = (vars) ->
-  list_ids = vars.list_ids.split(',').map((v) -> v.trim()).join('|')
+  list_ids = helper.getListIds vars
+  values = helper.getValues vars
 
-
-  url: "https://app.suppressionlist.com/exists/#{list_ids}/#{vars.values}"
+  url: "https://app.suppressionlist.com/exists/#{list_ids}/#{values}"
   method: 'GET'
-  headers:
-    'Accept': 'application/json'
-    'Authorization': "Basic #{new Buffer("X:#{vars.activeprospect.api_key}").toString('base64')}"
+  headers: helper.getRequestHeaders(vars.activeprospect.api_key, false)
 
 request.variables = ->
   [
-    { name: 'list_ids',  description: 'SuppressionList List Id (comma separated)', type: 'string', required: true },
-    { name: 'values', description: 'Item(s) to be looked up (phone/email/etc.)',   type: 'string', required: true }
+    { name: 'list_ids',  description: 'SuppressionList List Id (comma separated)', type: 'string' }
+    { name: 'values', description: 'Item(s) to be looked up (phone/email/etc.)',   type: 'string' }
+    { name: 'list_item', description: 'Item(s) to be looked up (deprecated)', type: 'string' }
   ]
 
 
 response = (vars, req, res) ->
-  body = JSON.parse(res.body)
+  event = helper.parseResponse(res, true)
 
-  if body.error?
-    event = { outcome: 'error', reason: "SuppressionList error (#{res.status}) #{body.error}" }
-  else
-    event = JSON.parse(res.body)
-    event.outcome = 'success'
-    event.reason = null
+  if event.outcome == 'success' and event.exists_in_lists?
     event.found_in = event.exists_in_lists
     delete event.exists_in_lists
 
@@ -47,5 +42,6 @@ response.variables = ->
 
 module.exports =
   type: 'outbound'
+  validate: helper.validate
   request: request
   response: response

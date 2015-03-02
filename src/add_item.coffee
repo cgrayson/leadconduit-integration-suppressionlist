@@ -1,34 +1,25 @@
 mimecontent = require('mime-content')
+helper = require('./helper')
 
 request = (vars) ->
-  values = vars.values.split(',').map((v) -> v.trim()).join('|')
+  values = helper.getValues vars
 
   url: "https://app.suppressionlist.com/lists/#{vars.list_id}/items"
   method: 'POST'
-  headers:
-    'Content-Type': 'application/json'
-    'Accept': 'application/json'
-    'Authorization': "Basic #{new Buffer("X:#{vars.activeprospect.api_key}").toString('base64')}"
+  headers: helper.getRequestHeaders(vars.activeprospect.api_key)
   body:
     JSON.stringify(values: values)
+
 request.variables = ->
   [
-    { name: 'list_id',   description: 'SuppressionList List Id',                                  type: 'string', required: true },
-    { name: 'values',    description: 'Item(s) to be added to SuppressionList (comma separated)', type: 'string', required: true }
+    { name: 'list_id', description: 'SuppressionList List Id', type: 'string' }
+    { name: 'values', description: 'Item(s) to be added to SuppressionList (comma separated)', type: 'string' }
+    { name: 'list_item', description: 'Item(s) to be looked up (deprecated)', type: 'string' }
   ]
 
 
 response = (vars, req, res) ->
-  body = JSON.parse(res.body)
-
-  if res.status != 200
-    event = { outcome: 'error', reason: "SuppressionList error (#{res.status})" }
-  else
-    event = body
-    event.outcome = 'success'
-    event.reason = null
-
-  add_item: event
+  add_item: helper.parseResponse(res)
 
 response.variables = ->
   [
