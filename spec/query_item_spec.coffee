@@ -71,6 +71,8 @@ describe 'Query List Item', ->
     it 'should return success outcome on not-found/404 response status', ->
       res =
         status: 404,
+        headers:
+          'Content-Type': "application/json"
         body: """
               {
               "specified_lists": ["list_1"],
