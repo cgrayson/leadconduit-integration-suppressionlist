@@ -24,7 +24,11 @@ validate = (vars) ->
 
 
 parseResponse = (res, allow404 = false) ->
-  body = JSON.parse(res.body)
+  if res.headers['Content-Type'] == 'application/json'
+    body = JSON.parse(res.body)
+  else
+    body =
+      error: "Possibly incorrect list_id"
 
   if body.error? or (res.status != 200 and !allow404)
     event = { outcome: 'error', reason: "SuppressionList error (#{res.status}) #{body.error or ''}".trim()  }
