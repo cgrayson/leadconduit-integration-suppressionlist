@@ -24,7 +24,7 @@ validate = (vars) ->
 
 
 parseResponse = (res, allow404 = false) ->
-  if res.headers['Content-Type'] == 'application/json'
+  if res.headers['Content-Type'].indexOf('application/json') >= 0
     body = JSON.parse(res.body)
   else
     body =
