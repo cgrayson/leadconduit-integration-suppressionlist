@@ -4,7 +4,7 @@ getListIds = (vars) ->
 
 
 getValues = (vars) ->
-  values = vars.values or vars.list_item # 'list_item' is deprecated variable name for 'values'
+  values = vars.values
   values.split(',').map((v) -> v.trim()).join('|')
 
 
@@ -20,7 +20,7 @@ getRequestHeaders = (api_key, setContentType = true) ->
 
 validate = (vars) ->
   return 'list_ids must not be blank' unless vars.list_ids?
-  return 'values must not be blank' unless vars.values? or vars.list_item? # 'list_item' is deprecated variable name for 'values'
+  return 'values must not be blank' unless vars.values?
 
 
 parseResponse = (res, allow404 = false) ->

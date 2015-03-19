@@ -13,7 +13,6 @@ request.variables = ->
   [
     { name: 'list_ids',  description: 'SuppressionList List Id (comma separated)', type: 'string' }
     { name: 'values', description: 'Item(s) to be looked up (phone/email/etc.)',   type: 'string' }
-    { name: 'list_item', description: 'Item(s) to be looked up (deprecated)', type: 'string' }
   ]
 
 

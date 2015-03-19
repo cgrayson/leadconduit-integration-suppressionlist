@@ -12,10 +12,6 @@ describe 'Query List Item', ->
     it 'should have url', ->
       assert.equal 'https://app.suppressionlist.com/exists/seabass|things|more_things/boilermakers@example.com', request.url
 
-    it 'should set url with deprecated list_item variable', ->
-      request = integration.request(activeprospect: {api_key: '1234'}, list_ids: 'seabass', list_item: 'boilermakers@example.com')
-      assert.equal 'https://app.suppressionlist.com/exists/seabass/boilermakers@example.com', request.url
-
     it 'should be get', ->
       assert.equal 'GET', request.method
 
