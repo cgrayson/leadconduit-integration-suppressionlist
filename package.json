@@ -1,6 +1,6 @@
 {
   "name": "leadconduit-suppressionlist",
-  "version": "0.6.2",
+  "version": "1.0.0",
   "description": "LeadConduit integration with SuppressionList",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,10 @@
     "type": "git",
     "url": "git://github.com/activeprospect/leadconduit-integration-suppressionlist.git"
   },
-  "author": "Taylor Brooks <taylor@activeprospect.com>",
+  "contributors": [
+    "Chris Grayson <chris@activeprospect.com>",
+    "Taylor Brooks <taylor@activeprospect.com>"
+  ],
   "licenses": [
     {
       "type": "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International",
