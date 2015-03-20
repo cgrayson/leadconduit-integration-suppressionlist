@@ -14,9 +14,6 @@ describe 'Helper', ->
     it 'should be satisfied with list_ids and values', () ->
       assert.isUndefined helper.validate(list_ids: 'foo', values: 'bar@baz.com')
 
-    it 'should allow deprecated list_item variable instead of values', () ->
-      assert.isUndefined helper.validate(list_ids: 'foo', list_item: 'bar@baz.com')
-
   describe 'Request Headers', ->
     headers = {}
 
