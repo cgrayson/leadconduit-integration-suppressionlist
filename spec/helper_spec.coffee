@@ -11,6 +11,12 @@ describe 'Helper', ->
     it 'should require values', () ->
       assert.equal helper.validate(list_ids: 'foo'), 'values must not be blank'
 
+    it 'should require values', () ->
+      assert.equal helper.validate(list_ids: 'foo', values: ''), 'values must not be blank'
+
+    it 'should require values', () ->
+      assert.equal helper.validate(list_ids: 'foo', values: null), 'values must not be blank'
+
     it 'should be satisfied with list_ids and values', () ->
       assert.isUndefined helper.validate(list_ids: 'foo', values: 'bar@baz.com')
 
