@@ -10,10 +10,13 @@ describe 'Delete List Item', ->
       request = integration.request(activeprospect: {api_key: '1234'}, list_id: 'things', values: 'taylor@activeprospect.com')
 
     it 'should have url', ->
-      assert.equal 'https://app.suppressionlist.com/lists/things/items/taylor@activeprospect.com', request.url
+      assert.equal 'https://app.suppressionlist.com/lists/things/items', request.url
 
     it 'should be delete', ->
       assert.equal 'DELETE', request.method
+
+    it 'should have body', ->
+      assert.equal '{"values":"taylor@activeprospect.com"}', request.body
 
 
   describe 'Response', ->
