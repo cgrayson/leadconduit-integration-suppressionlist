@@ -34,5 +34,6 @@ response.variables = ->
 
 module.exports =
   type: 'outbound'
+  validate: helper.validate
   request: request
   response: response
