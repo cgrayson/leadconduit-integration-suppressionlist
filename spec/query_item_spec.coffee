@@ -89,5 +89,5 @@ describe 'Query List Item', ->
       assert.deepEqual response, expected
 
   describe 'Validate', ->
-    it 'validate should function properly', ->
+    it 'should function properly', ->
       assert.equal integration.validate(list_ids: 'foo'), 'values must not be blank'
