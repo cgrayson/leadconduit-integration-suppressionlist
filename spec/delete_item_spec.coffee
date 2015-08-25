@@ -103,3 +103,7 @@ describe 'Delete List Item', ->
           reason: 'SuppressionList error (500) Possibly incorrect list_id'
       response = integration.response(vars, req, res)
       assert.deepEqual expected, response
+
+  describe 'Validate', ->
+    it 'validate should function properly', ->
+      assert.equal integration.validate(list_ids: 'foo'), 'values must not be blank'
