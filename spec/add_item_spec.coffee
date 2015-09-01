@@ -105,4 +105,4 @@ describe 'Add List Item', ->
 
   describe 'Validate', ->
     it 'should function properly', ->
-      assert.equal integration.validate(list_ids: 'foo'), 'values must not be blank'
+      assert.equal integration.validate(list_id: 'foo'), 'values must not be blank'
