@@ -13,15 +13,16 @@
   },
   "contributors": [
     "Chris Grayson <chris@activeprospect.com>",
-    "Taylor Brooks <taylor@activeprospect.com>"
+    "Taylor Brooks <taylor@activeprospect.com>",
+    "Alex Wolfe <alex@activeprospect.com>"
   ],
   "license": "CC-BY-NC-ND-4.0",
   "engines": {
     "node": ">0.10.26"
   },
   "dependencies": {
-    "timekeeper": "0.0.4",
-    "mime-content": ">=0.0.6"
+    "csvrow": "^0.1.0",
+    "lodash": "^3.10.1"
   },
   "devDependencies": {
     "coffee-script": ">= 1.7.0",

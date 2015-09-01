@@ -10,10 +10,10 @@ describe 'Query List Item', ->
       request = integration.request(activeprospect: {api_key: '1234'}, list_ids: 'seabass, things, more_things', values: 'boilermakers@example.com')
 
     it 'should have url', ->
-      assert.equal 'https://app.suppressionlist.com/exists/seabass|things|more_things/boilermakers@example.com', request.url
+      assert.equal request.url, 'https://app.suppressionlist.com/exists/seabass|things|more_things/boilermakers@example.com'
 
     it 'should be get', ->
-      assert.equal 'GET', request.method
+      assert.equal request.method, 'GET'
 
 
   describe 'Response', ->
@@ -26,10 +26,10 @@ describe 'Query List Item', ->
           'Content-Type': 'application/json'
         body: """
               {
-              "specified_lists": ["list_1", "list_2", "list_3"],
-              "key": "taylor@activeprospect.com",
-              "found": true,
-              "exists_in_lists": ["list_2", "list_3"]
+                "specified_lists": ["list_1", "list_2", "list_3"],
+                "key": "taylor@activeprospect.com",
+                "found": true,
+                "exists_in_lists": ["list_2", "list_3"]
               }
               """
       expected =
@@ -41,7 +41,7 @@ describe 'Query List Item', ->
           found: true
           found_in: ["list_2", "list_3"]
       response = integration.response(vars, req, res)
-      assert.deepEqual expected, response
+      assert.deepEqual response, expected
 
     it 'should return error outcome on non-200 response status', ->
       vars = {}
@@ -52,17 +52,15 @@ describe 'Query List Item', ->
           'Content-Type': 'application/json'
         body: """
               {
-              "outcome":"error",
-              "reason":"SuppressionList error (400)",
-              "error": "No such account."
+                "error":"No such account"
               }
               """
       expected =
         query_item:
           outcome: 'error'
-          reason: 'SuppressionList error (400) No such account.'
+          reason: 'No such account'
       response = integration.response(vars, req, res)
-      assert.deepEqual expected, response
+      assert.deepEqual response, expected
 
     it 'should return success outcome on not-found/404 response status', ->
       res =
@@ -71,10 +69,9 @@ describe 'Query List Item', ->
           'Content-Type': "application/json"
         body: """
               {
-              "specified_lists": ["list_1"],
-              "key": "taylor@swift.com",
-              "found": false,
-              "reason": null
+                "specified_lists": ["list_1"],
+                "key": "taylor@swift.com",
+                "found": false
               }
               """
       expected =

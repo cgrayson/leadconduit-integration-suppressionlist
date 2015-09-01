@@ -1,25 +1,26 @@
-mimecontent = require('mime-content')
+_ = require('lodash')
 helper = require('./helper')
 
 request = (vars) ->
-  list_ids = helper.getListIds vars
-  values = helper.getValues vars
+  listNames = helper.getListUrlNames(vars)
+  values = helper.getValues(vars).join('|')
+  baseUrl = helper.getBaseUrl()
 
-  url: "#{helper.getBaseUrl()}/exists/#{list_ids}/#{values}"
+  url: "#{baseUrl}/exists/#{listNames}/#{values}"
   method: 'GET'
   headers: helper.getRequestHeaders(vars.activeprospect.api_key, false)
 
 request.variables = ->
   [
-    { name: 'list_ids',  description: 'SuppressionList List Id (comma separated)', required: true, type: 'string' }
-    { name: 'values', description: 'Item(s) to be looked up (phone/email/etc.)',   required: true, type: 'string' }
+    { name: 'list_names',  description: 'SuppressionList List URL Names (comma separated)', required: true, type: 'string' }
+    { name: 'values', description: 'Phone, email or other values to be looked up (comma separated)',   required: true, type: 'string' }
   ]
 
 
 response = (vars, req, res) ->
-  event = helper.parseResponse(res, true)
+  event = helper.parseResponse(res)
 
-  if event.outcome == 'success' and event.exists_in_lists?
+  if event.exists_in_lists?
     event.found_in = event.exists_in_lists
     delete event.exists_in_lists
 
@@ -28,10 +29,10 @@ response = (vars, req, res) ->
 
 response.variables = ->
   [
-    { name: 'query_item.outcome', type: 'string', description: 'Was SuppressionList response data appended?' },
-    { name: 'query_item.reason', type: 'string', description: 'Error reason' },
-    { name: 'query_item.found', type: 'boolean', description: 'is the lookup item found on any of the suppression lists?'},
-    { name: 'query_item.found_in', type: 'array', description: 'list of suppression lists the item was found within'}
+    { name: 'query_item.outcome', type: 'string', description: 'Was SuppressionList response data appended?' }
+    { name: 'query_item.reason', type: 'string', description: 'Error reason' }
+    { name: 'query_item.found', type: 'boolean', description: 'Is the lookup item found on any of the suppression lists?' }
+    { name: 'query_item.found_in', type: 'array', description: 'List of suppression lists the item was found within' }
   ]
 
 

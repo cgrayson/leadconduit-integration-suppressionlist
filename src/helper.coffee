@@ -1,11 +1,23 @@
+_ = require('lodash')
+csv = require('csvrow')
 
-getListIds = (vars) ->
-  vars.list_ids?.split(',').map((v) -> v.trim()).join('|')
+
+getListUrlNames = (vars) ->
+  urlNames = toList(vars.list_ids or vars.list_id or vars.list_names or vars.list_name).map (v) ->
+    v.toLowerCase().replace(/\s/g, '_').replace(/[^\w_]/g, '')
+  urlNames.join('|')
 
 
 getValues = (vars) ->
-  values = vars.values
-  values.split(',').map((v) -> v.trim()).join('|')
+  toList(vars.values or [])
+  
+
+toList = (vals) ->
+  vals = [vals] unless _.isArray(vals)
+  vals = _.compact vals
+  _.compact _.flatten vals.map (v) ->
+    csv.parse(v)
+
 
 
 getRequestHeaders = (api_key, setContentType = true) ->
@@ -19,25 +31,40 @@ getRequestHeaders = (api_key, setContentType = true) ->
 
 
 validate = (vars) ->
-  return 'list_ids must not be blank' unless vars.list_ids? or vars.list_id?
-  return 'values must not be blank' unless vars.values?.length
+  return 'a list name is required' unless getListUrlNames(vars)
+  return 'values must not be blank' unless getValues(vars).length
 
 
-parseResponse = (res, allow404 = false) ->
-  if res.headers['Content-Type'].indexOf('application/json') >= 0
-    body = JSON.parse(res.body)
+parseJSONBody = (res) ->
+  if res.status == 401
+    error: 'Authentication failed'
   else
-    body =
-      error: "Possibly incorrect list_id"
+    if res.headers['Content-Type'].indexOf('application/json') >= 0
+      try
+        JSON.parse(res.body)
+      catch err
+        error: 'Error parsing response'
+    else
+      error: 'Unsupported response'
 
-  if body.error? or (res.status != 200 and !allow404)
-    event = { outcome: 'error', reason: "SuppressionList error (#{res.status}) #{body.error or ''}".trim()  }
+
+parseResponse = (res) ->
+  body = parseJSONBody(res)
+  if body.error
+    outcome: 'error'
+    reason: body.error?.replace(/\.$/, '')
   else
     event = body
     event.outcome = 'success'
     event.reason = null
+    event
 
-  event
+getBaseUrl = ->
+  switch process.env.NODE_ENV
+    when 'production', 'test' then 'https://app.suppressionlist.com'
+    when 'staging' then 'https://staging.suppressionlist.com'
+    when 'development' then 'http://suppressionlist.dev'
+
 
 
 getBaseUrl = ->
@@ -48,7 +75,7 @@ getBaseUrl = ->
 
 
 module.exports =
-  getListIds: getListIds
+  getListUrlNames: getListUrlNames
   getValues: getValues
   getRequestHeaders: getRequestHeaders
   validate: validate
