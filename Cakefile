@@ -29,4 +29,5 @@ run = (args...) ->
   cmd.stdout.on 'data', (data) -> process.stdout.write data
   cmd.stderr.on 'data', (data) -> process.stderr.write data
   process.on 'SIGHUP', -> cmd.kill()
-  cmd.on 'exit', (code) -> callback() if callback? and code is 0
+  cmd.on 'exit', (code) ->
+    process.exit(code)
