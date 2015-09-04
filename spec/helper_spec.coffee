@@ -1,5 +1,6 @@
 assert = require('chai').assert
 helper = require('../src/helper')
+fields = require('leadconduit-fields')
 
 describe 'Helper', ->
 
@@ -16,6 +17,10 @@ describe 'Helper', ->
 
     it 'should require values', () ->
       assert.equal helper.validate(list_ids: 'foo', values: null), 'values must not be blank'
+
+    it 'should require values in typed fields', () ->
+      lead = fields.buildLeadVars email: ""  # an empty lead.email (a String) is different than ''
+      assert.equal helper.validate(list_ids: 'foo', values: lead.email), 'values must not be blank'
 
     it 'should be satisfied with list_ids and values', () ->
       assert.isUndefined helper.validate(list_ids: 'foo', values: 'bar@baz.com')
