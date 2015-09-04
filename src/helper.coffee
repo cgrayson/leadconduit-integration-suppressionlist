@@ -20,7 +20,7 @@ getRequestHeaders = (api_key, setContentType = true) ->
 
 validate = (vars) ->
   return 'list_ids must not be blank' unless vars.list_ids? or vars.list_id?
-  return 'values must not be blank' unless vars.values
+  return 'values must not be blank' unless vars.values?.length
 
 
 parseResponse = (res, allow404 = false) ->
