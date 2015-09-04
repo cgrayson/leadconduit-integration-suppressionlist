@@ -20,6 +20,23 @@ describe 'Helper', ->
     it 'should be satisfied with list_ids and values', () ->
       assert.isUndefined helper.validate(list_ids: 'foo', values: 'bar@baz.com')
 
+  describe 'Base URL', ->
+
+    after ->
+      process.env.NODE_ENV = 'test'
+
+    it 'should get production url', ->
+      process.env.NODE_ENV = 'production'
+      assert.equal helper.getBaseUrl(), 'https://app.suppressionlist.com'
+
+    it 'should get staging url', ->
+      process.env.NODE_ENV = 'staging'
+      assert.equal helper.getBaseUrl(), 'https://staging.suppressionlist.com'
+
+    it 'should get development url', ->
+      process.env.NODE_ENV = 'development'
+      assert.equal helper.getBaseUrl(), 'http://suppressionlist.dev'
+
   describe 'Request Headers', ->
     headers = {}
 

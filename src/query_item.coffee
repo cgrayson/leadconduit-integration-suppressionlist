@@ -5,7 +5,7 @@ request = (vars) ->
   list_ids = helper.getListIds vars
   values = helper.getValues vars
 
-  url: "https://app.suppressionlist.com/exists/#{list_ids}/#{values}"
+  url: "#{helper.getBaseUrl()}/exists/#{list_ids}/#{values}"
   method: 'GET'
   headers: helper.getRequestHeaders(vars.activeprospect.api_key, false)
 

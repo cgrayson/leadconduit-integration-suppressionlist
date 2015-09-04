@@ -4,7 +4,7 @@ helper = require('./helper')
 request = (vars) ->
   values = helper.getValues vars
 
-  url: "https://app.suppressionlist.com/lists/#{vars.list_id}/items"
+  url: "#{helper.getBaseUrl()}/lists/#{vars.list_id}/items"
   method: 'DELETE'
   headers: helper.getRequestHeaders(vars.activeprospect.api_key)
   body: JSON.stringify(values: values)

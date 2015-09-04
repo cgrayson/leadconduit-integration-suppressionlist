@@ -40,9 +40,17 @@ parseResponse = (res, allow404 = false) ->
   event
 
 
+getBaseUrl = ->
+  switch process.env.NODE_ENV
+    when 'production', 'test' then 'https://app.suppressionlist.com'
+    when 'staging' then 'https://staging.suppressionlist.com'
+    when 'development' then 'http://suppressionlist.dev'
+
+
 module.exports =
   getListIds: getListIds
   getValues: getValues
   getRequestHeaders: getRequestHeaders
   validate: validate
   parseResponse: parseResponse
+  getBaseUrl: getBaseUrl
