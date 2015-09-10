@@ -10,13 +10,13 @@ describe 'Delete List Item', ->
       request = integration.request(activeprospect: {api_key: '1234'}, list_id: 'things', values: 'taylor@activeprospect.com')
 
     it 'should have url', ->
-      assert.equal 'https://app.suppressionlist.com/lists/things/items', request.url
+      assert.equal request.url, 'https://app.suppressionlist.com/lists/things/items'
 
     it 'should be delete', ->
-      assert.equal 'DELETE', request.method
+      assert.equal  request.method, 'DELETE'
 
     it 'should have body', ->
-      assert.equal '{"values":"taylor@activeprospect.com"}', request.body
+      assert.equal request.body, '{"values":["taylor@activeprospect.com"]}'
 
 
   describe 'Response', ->
@@ -29,9 +29,8 @@ describe 'Delete List Item', ->
           'Content-Type': 'application/json; charset=utf-8'
         body: """
               {
-              "outcome": "success",
-              "deleted": 2,
-              "rejected": 0
+                "deleted": 2,
+                "rejected": 0
               }
               """
       expected =
@@ -52,14 +51,13 @@ describe 'Delete List Item', ->
           'Content-Type': 'application/json'
         body: """
               {
-              "outcome":"error",
-              "reason":"SuppressionList error (400)"
+                "error":"Something went wrong"
               }
               """
       expected =
         delete_item:
           outcome: 'error'
-          reason: 'SuppressionList error (400)'
+          reason: 'Something went wrong'
       response = integration.response(vars, req, res)
       assert.deepEqual expected, response
 
@@ -100,7 +98,7 @@ describe 'Delete List Item', ->
       expected =
         delete_item:
           outcome: 'error'
-          reason: 'SuppressionList error (500) Possibly incorrect list_id'
+          reason: 'Unsupported response'
       response = integration.response(vars, req, res)
       assert.deepEqual expected, response
 

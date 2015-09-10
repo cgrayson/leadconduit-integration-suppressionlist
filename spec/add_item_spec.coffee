@@ -10,13 +10,13 @@ describe 'Add List Item', ->
       request = integration.request(activeprospect: {api_key: '1234'}, list_id: 'things', values: 'boilermakers@example.com, taylor@activeprospect.com')
 
     it 'should have url', ->
-      assert.equal 'https://app.suppressionlist.com/lists/things/items', request.url
+      assert.equal request.url, 'https://app.suppressionlist.com/lists/things/items'
 
     it 'should be get', ->
-      assert.equal 'POST', request.method
+      assert.equal request.method, 'POST'
 
     it 'should have the correct body', ->
-      assert.equal '{"values":"boilermakers@example.com|taylor@activeprospect.com"}', request.body
+      assert.equal request.body, '{"values":["boilermakers@example.com","taylor@activeprospect.com"]}'
 
   describe 'Response', ->
     it 'should parse JSON body', ->
@@ -28,9 +28,8 @@ describe 'Add List Item', ->
           'Content-Type': 'application/json; charset=utf-8'
         body: """
               {
-              "outcome": "success",
-              "accepted": 2,
-              "rejected": 0
+                "accepted": 2,
+                "rejected": 0
               }
               """
       expected =
@@ -40,7 +39,7 @@ describe 'Add List Item', ->
           accepted: 2
           rejected: 0
       response = integration.response(vars, req, res)
-      assert.deepEqual expected, response
+      assert.deepEqual response, expected
 
     it 'should return error outcome on non-200 response status', ->
       vars = {}
@@ -51,16 +50,15 @@ describe 'Add List Item', ->
           'Content-Type': 'application/json'
         body: """
               {
-              "outcome":"error",
-              "reason":"SuppressionList error (400)"
+                "error":"Something went wrong"
               }
               """
       expected =
         add_item:
           outcome: 'error'
-          reason: 'SuppressionList error (400)'
+          reason: 'Something went wrong'
       response = integration.response(vars, req, res)
-      assert.deepEqual expected, response
+      assert.deepEqual response, expected
 
     it 'should return error outcome on 500/HTML response', ->
       vars = {}
@@ -99,9 +97,9 @@ describe 'Add List Item', ->
       expected =
         add_item:
           outcome: 'error'
-          reason: 'SuppressionList error (500) Possibly incorrect list_id'
+          reason: 'Unsupported response'
       response = integration.response(vars, req, res)
-      assert.deepEqual expected, response
+      assert.deepEqual response, expected
 
   describe 'Validate', ->
     it 'should function properly', ->
