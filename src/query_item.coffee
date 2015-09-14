@@ -1,5 +1,6 @@
 _ = require('lodash')
 helper = require('./helper')
+time = require('leadconduit-types').time
 
 request = (vars) ->
   listNames = helper.getListUrlNames(vars)
@@ -24,6 +25,9 @@ response = (vars, req, res) ->
     event.found_in = event.exists_in_lists
     delete event.exists_in_lists
 
+    event.added_at = time.parse _.last(_.sortBy(event.entries, 'added_at')).added_at
+    delete event.entries
+
   query_item: event
 
 
@@ -33,6 +37,7 @@ response.variables = ->
     { name: 'query_item.reason', type: 'string', description: 'Error reason' }
     { name: 'query_item.found', type: 'boolean', description: 'Is the lookup item found on any of the suppression lists?' }
     { name: 'query_item.found_in', type: 'array', description: 'List of suppression lists the item was found within' }
+    { name: 'query_item.added_at', type: 'time', description: 'Most recent timestamp the found query item was added at' }
   ]
 
 
