@@ -62,14 +62,6 @@ parseResponse = (res) ->
 getBaseUrl = ->
   switch process.env.NODE_ENV
     when 'production', 'test' then 'https://app.suppressionlist.com'
-    when 'staging' then 'https://staging.suppressionlist.com'
-    when 'development' then 'http://suppressionlist.dev'
-
-
-
-getBaseUrl = ->
-  switch process.env.NODE_ENV
-    when 'production', 'test' then 'https://app.suppressionlist.com'
     when 'staging' then 'http://staging.suppressionlist.com'
     when 'development' then 'http://suppressionlist.dev'
 
