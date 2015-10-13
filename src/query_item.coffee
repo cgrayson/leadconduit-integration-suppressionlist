@@ -1,6 +1,5 @@
 _ = require('lodash')
 helper = require('./helper')
-time = require('leadconduit-types').time
 
 request = (vars) ->
   listNames = helper.getListUrlNames(vars)
@@ -25,7 +24,7 @@ response = (vars, req, res) ->
     event.found_in = event.exists_in_lists
     delete event.exists_in_lists
 
-    event.added_at = time.parse _.last(_.sortBy(event.entries, 'added_at')).added_at
+    event.added_at = _.last(_.sortBy(event.entries, 'added_at')).added_at
     delete event.entries
 
   query_item: event
