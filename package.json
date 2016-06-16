@@ -25,9 +25,9 @@
     "lodash": "^3.10.1"
   },
   "devDependencies": {
-    "coffee-script": ">= 1.7.0",
-    "mocha": ">= 1.17.0",
     "chai": ">= 1.9.0",
-    "leadconduit-fields": "^2.1.6"
+    "coffee-script": ">= 1.7.0",
+    "leadconduit-types": "^4.8.1",
+    "mocha": ">= 1.17.0"
   }
 }
