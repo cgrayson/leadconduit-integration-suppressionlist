@@ -10,7 +10,7 @@ getListUrlNames = (vars) ->
 
 getValues = (vars) ->
   toList(vars.values or [])
-  
+
 
 toList = (vals) ->
   vals = [vals] unless _.isArray(vals)
@@ -31,8 +31,17 @@ getRequestHeaders = (api_key, setContentType = true) ->
 
 
 validate = (vars) ->
-  return 'a list name is required' unless getListUrlNames(vars)
-  return 'values must not be blank' unless getValues(vars).length
+  try
+    listName = getListUrlNames(vars)
+  catch
+    return 'invalid list name format'
+  try
+    values = getValues(vars)
+  catch
+    return 'invalid values format'
+
+  return 'a list name is required' unless listName
+  return 'values must not be blank' unless values.length
 
 
 parseJSONBody = (res) ->
