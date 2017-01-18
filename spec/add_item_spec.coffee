@@ -101,6 +101,18 @@ describe 'Add List Item', ->
       response = integration.response(vars, req, res)
       assert.deepEqual response, expected
 
-  describe 'Validate', ->
-    it 'should function properly', ->
+
+
+  describe.only 'Validate', ->
+
+    it 'should require values', ->
       assert.equal integration.validate(list_id: 'foo'), 'values must not be blank'
+
+    it 'should handle value with double quote', ->
+      assert.equal integration.validate(list_id: 'foo', values: 'donkeykong@gmail.com"'), 'invalid values format'
+
+    it 'should handle invalid list name', ->
+      assert.equal integration.validate(list_id: 'foo"', values: 'donkeykong@gmail.com'), 'invalid list name format'
+
+    it 'should function properly', ->
+      assert.isUndefined integration.validate(list_id: 'foo', values: 'donkeykong@gmail.com')
