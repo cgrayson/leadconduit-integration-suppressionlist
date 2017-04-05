@@ -10,7 +10,7 @@ describe 'Query List Item', ->
       request = integration.request(activeprospect: {api_key: '1234'}, list_ids: 'seabass, things, more_things', values: 'boilermakers@example.com')
 
     it 'should have url', ->
-      assert.equal request.url, 'https://app.suppressionlist.com/exists/seabass|things|more_things/boilermakers@example.com'
+      assert.equal request.url, 'https://app.suppressionlist.com/exists/seabass|things|more_things/boilermakers%40example.com'
 
     it 'should be get', ->
       assert.equal request.method, 'GET'
