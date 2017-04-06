@@ -9,10 +9,7 @@ getListUrlNames = (vars) ->
 
 
 getValues = (vars) ->
-  vals = []
-  for val in toList(vars.values or [])
-    vals.push(encodeURIComponent(val))
-  vals
+  toList(vars.values or [])
 
 toList = (vals) ->
   vals = [vals] unless _.isArray(vals)

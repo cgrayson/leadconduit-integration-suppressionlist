@@ -16,7 +16,7 @@ describe 'Delete List Item', ->
       assert.equal  request.method, 'DELETE'
 
     it 'should have body', ->
-      assert.equal request.body, '{"values":["taylor%40activeprospect.com"]}'
+      assert.equal request.body, '{"values":["taylor@activeprospect.com"]}'
 
 
   describe 'Response', ->
