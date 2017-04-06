@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org)
 
+## [1.3.4] - 2017-04-06
+### Fixed
+- `values` are now only URL encoded when they appear in a URL
+
 ## [1.3.3] - 2017-04-05
 ### Fixed
 - `values` are now URL encoded

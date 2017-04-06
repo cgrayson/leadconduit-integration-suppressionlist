@@ -3,8 +3,10 @@ helper = require('./helper')
 
 request = (vars) ->
   listNames = helper.getListUrlNames(vars)
-  values = helper.getValues(vars).join('|')
   baseUrl = helper.getBaseUrl()
+  values = helper.getValues(vars).map (v) ->
+    encodeURIComponent(v)
+  values = values.join('|')
 
   url: "#{baseUrl}/exists/#{listNames}/#{values}"
   method: 'GET'

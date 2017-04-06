@@ -16,7 +16,7 @@ describe 'Add List Item', ->
       assert.equal request.method, 'POST'
 
     it 'should have the correct body', ->
-      assert.equal request.body, '{"values":["boilermakers%40example.com","taylor%40activeprospect.com"]}'
+      assert.equal request.body, '{"values":["boilermakers@example.com","taylor@activeprospect.com"]}'
 
   describe 'Response', ->
     it 'should parse JSON body', ->
