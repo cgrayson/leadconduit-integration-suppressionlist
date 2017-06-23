@@ -21,12 +21,20 @@
     "node": ">0.10.26"
   },
   "dependencies": {
+    "body-parser": "^1.17.2",
+    "bson": "^1.0.4",
     "csvrow": "^0.1.0",
-    "lodash": "^3.10.1"
+    "express": "^4.15.3",
+    "express-session": "^1.15.3",
+    "lodash": "^3.10.1",
+    "request": "^2.81.0",
+    "webpack": "^3.0.0",
+    "webpack-dev-middleware": "^1.11.0"
   },
   "devDependencies": {
     "chai": ">= 1.9.0",
     "coffee-script": ">= 1.7.0",
+    "leadconduit-cakefile": "^0.3.1",
     "leadconduit-types": "^4.8.1",
     "mocha": ">= 1.17.0"
   }

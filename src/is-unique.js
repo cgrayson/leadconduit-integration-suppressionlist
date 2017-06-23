@@ -1,0 +1,79 @@
+const _                = require('lodash'),
+      request          = require('request'),
+      queryItem        = require('./query_item'),
+      addItem          = require('./add_item'),
+      helper           = require('./helper'),
+      normalizeHeaders = helper.normalizeHeaders,
+      validate         = helper.validate;
+
+
+const wrap = (integration) => {
+  return (vars, callback) => {
+    let req;
+    try {
+      req = integration.request(vars);
+    } catch (err) {
+      return callback(err);
+    }
+    request(req, (err, resp, body) => {
+      if (err) return callback(err);
+      const res = {
+        status: resp.statusCode,
+        version: '1.1',
+        headers: normalizeHeaders(resp.headers),
+        body: JSON.stringify(body)
+      };
+      let event;
+      try {
+        event = integration.response(vars, req, res);
+      } catch (err) {
+        return callback(err);
+      }
+      callback(null, event);
+    })
+  };
+};
+
+const query = wrap(queryItem);
+const add = wrap(addItem);
+
+const handle = (vars, callback) => {
+  query(vars, (err, queryEvent) => {
+    if (err) return callback(err);
+    const event = _.merge({}, queryEvent);
+    const found = _.get(queryEvent, 'query_item.found');
+    if (found) {
+      add(vars, (err, addEvent) => {
+        if (err) return callback(err);
+        const event = _.merge(event, addEvent);
+        event.outcome = 'success';
+        callback(null, event);
+      })
+    } else {
+      event.outcome = 'failure';
+      event.reason = 'Duplicate';
+      callback(null, event);
+    }
+  })
+};
+
+const requestVariables = () => {
+  return [
+    { name: 'list_name', description: 'SuppressionList List URL Name', required: true, type: 'string' },
+    { name: 'values', description: 'Phone, email or other values to be added to the list (comma separated)', required: true, type: 'string' }
+  ];
+};
+
+const responseVariables = () => {
+  return queryItem.response.variables().concat(addItem.response.variables());
+};
+
+const name = 'Query and Add Missing Item';
+
+module.exports = {
+  name,
+  handle,
+  requestVariables,
+  responseVariables,
+  validate
+};
