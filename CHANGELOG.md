@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org)
 
+## [1.4.0] - 2017-06-29
+### Added
+- new rich UI with support for fetching lists and ensuring a list exists
+- new "is unique" (query + add) endpoint
+
 ## [1.3.4] - 2017-04-06
 ### Fixed
 - `values` are now only URL encoded when they appear in a URL

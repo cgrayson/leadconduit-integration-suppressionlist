@@ -9,7 +9,7 @@ getListUrlNames = (vars) ->
 
 
 getValues = (vars) ->
-  toList(vars.values or [])
+  toList(vars.values or vars.value or [])
 
 toList = (vals) ->
   vals = [vals] unless _.isArray(vals)
@@ -74,6 +74,18 @@ getBaseUrl = ->
     when 'development' then 'http://suppressionlist.dev'
 
 
+
+normalizeHeaders = (headers) ->
+  normalHeaders = {}
+  for field, value of headers
+    normalizePart = (part) ->
+      "#{part[0].toUpperCase()}#{part[1..-1].toLowerCase()}"
+    normalField = field.split('-').map(normalizePart).join('-')
+    normalHeaders[normalField] = value
+  normalHeaders
+
+
+
 module.exports =
   getListUrlNames: getListUrlNames
   getValues: getValues
@@ -81,3 +93,4 @@ module.exports =
   validate: validate
   parseResponse: parseResponse
   getBaseUrl: getBaseUrl
+  normalizeHeaders: normalizeHeaders
