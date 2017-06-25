@@ -12,25 +12,6 @@ function init(config) {
   // Our app
   var app = angular.module('app', ['Pagination'])
     // $http config
-    .config(['$httpProvider', '$locationProvider', function($httpProvider, $locationProvider) {
-      $locationProvider.html5Mode({
-        enabled: true,
-        requireBase: false
-      });
-
-      // Handle special cases when interacting with the API
-      $httpProvider.interceptors.push(['$q', '$rootScope', function($q, $rootScope) {
-        return {
-          responseError: function(response) {
-            if (response.status == 401) {
-              $rootScope.requiresAuth = true;
-            }
-            $rootScope.error = response.error;
-            return $q.reject(response);
-          }
-        };
-      }]);
-    }])
     .controller('Page1Ctrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
       var state = $rootScope.state = $rootScope.state || {};
 
