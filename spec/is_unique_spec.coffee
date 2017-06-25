@@ -10,7 +10,7 @@ describe 'Is Unique', ->
 
 
   it 'should fail when found by query', (done) ->
-    nock 'http://suppressionlist.dev'
+    sl = nock 'https://app.suppressionlist.com'
       .defaultReplyHeaders
         'Content-Type': 'application/json'
       .get '/exists/email/hola'
@@ -35,12 +35,12 @@ describe 'Is Unique', ->
         found: true
         found_in: [ 'email' ]
         added_at: "2017-06-23T19:59:04Z"
-
+      sl.done()
       done()
 
 
   it 'should add when not found', (done) ->
-    nock('http://suppressionlist.dev')
+    sl = nock('https://app.suppressionlist.com')
       # query not found
       .get '/exists/email/hola'
       .reply 404, 
@@ -66,4 +66,5 @@ describe 'Is Unique', ->
         reason: null
         accepted: 1
         rejected: 0
+      sl.done()
       done()
