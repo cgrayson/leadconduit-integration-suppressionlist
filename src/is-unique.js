@@ -21,7 +21,7 @@ const wrap = (integration) => {
         status: resp.statusCode,
         version: '1.1',
         headers: normalizeHeaders(resp.headers),
-        body: JSON.stringify(body)
+        body: body
       };
       let event;
       try {
@@ -38,14 +38,20 @@ const query = wrap(queryItem);
 const add = wrap(addItem);
 
 const handle = (vars, callback) => {
-  query(vars, (err, queryEvent) => {
+  const queryVars = {
+    list_names: [ vars.list_name ],
+    values: vars.value,
+    activeprospect: vars.activeprospect
+  };
+
+  query(queryVars, (err, queryEvent) => {
     if (err) return callback(err);
     const event = _.merge({}, queryEvent);
     const found = _.get(queryEvent, 'query_item.found');
-    if (found) {
+    if (!found) {
       add(vars, (err, addEvent) => {
         if (err) return callback(err);
-        const event = _.merge(event, addEvent);
+        _.merge(event, addEvent);
         event.outcome = 'success';
         callback(null, event);
       })
@@ -60,7 +66,7 @@ const handle = (vars, callback) => {
 const requestVariables = () => {
   return [
     { name: 'list_name', description: 'SuppressionList List URL Name', required: true, type: 'string' },
-    { name: 'values', description: 'Phone, email or other values to be added to the list (comma separated)', required: true, type: 'string' }
+    { name: 'value', description: 'Phone, email or other value to be added to the list', required: true, type: 'string' }
   ];
 };
 

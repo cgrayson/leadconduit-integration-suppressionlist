@@ -3,7 +3,7 @@ const { Router } = require('express'),
 
 module.exports =
   new Router()
-    .post('/ensure_list', (req, res, next) => {
+    .post('/', (req, res, next) => {
       const apiKey = req.session.credential.token;
       const client = new Client(apiKey, process.env.NODE_ENV);
       const name = req.body.name;
@@ -11,7 +11,7 @@ module.exports =
       client.ensureList(name, ttl, (err, list) => {
         if (err) {
           if (err.statusCode)
-            res.status(err.statusCode).send({ error: err.message });
+            res.status(err.statusCode).send({ error: err.message, reason: err.body });
           else
             next(err);
           return;
