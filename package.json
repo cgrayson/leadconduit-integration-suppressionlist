@@ -32,7 +32,7 @@
     "lodash": "^3.10.1",
     "request": "^2.81.0",
     "simple-angular-pagination": "0.0.3",
-    "suppressionlist": "*",
+    "suppressionlist": "^0",
     "webpack": "^3.0.0",
     "webpack-dev-middleware": "^1.11.0"
   },
