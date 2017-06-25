@@ -11,5 +11,4 @@ module.exports =
          .use(json())
          .use('/credential', credential)
          .use(auth)
-         .use('/lists', lists)
-         .use('/ensure_list', ensureList);
+         .use('/lists', lists);
