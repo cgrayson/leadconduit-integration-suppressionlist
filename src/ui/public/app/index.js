@@ -16,37 +16,45 @@ function init(config) {
       var state = $rootScope.state = $rootScope.state || {};
 
       $scope.loading = true;
-      $http.post('credential', config.credential).then(function() {
-        $scope.loading = false;
-        $rootScope.config = config;
-        $rootScope.cancel = ui.cancel;
 
-        if (config.integration) {
-          state.action = _.last(config.integration.split('.'));
-        }
+      $rootScope.startOver = function() {
+        state.action = '';
+        $scope.changePage(1);
+      };
 
-        if (state.action == 'is_unique') {
-          setTimeout(function() { $rootScope.changePage(3); }, 0);
+      $rootScope.jump = function() {
+        if(state.action == 'is_unique') {
+          $scope.changePage(3);
         } else {
-          $rootScope.allowPrevious = true;
-          $http.get('lists').then(function(response) {
-            $rootScope.lists = response.data;
-          });
+          $scope.changePage(2);
         }
+      };
 
-        $rootScope.startOver = function() {
-          state.action = '';
-          $scope.changePage(1);
-        };
+      $rootScope.config = config;
+      $rootScope.cancel = ui.cancel;
 
-        $scope.jump = function() {
-          if(state.action == 'is_unique') {
-            $scope.changePage(3);
-          } else {
-            $scope.changePage(2);
+      // the creds should always be there since they're from AP
+      if (config.credential) {
+        $http.post('credential', config.credential).then(function() {
+          $scope.loading = false;
+
+          if (config.integration) {
+            state.action = _.last(config.integration.split('.'));
           }
-        };
-      });
+
+          if (state.action == 'is_unique') {
+            setTimeout(function() { $rootScope.changePage(3); }, 0);
+          } else {
+            $rootScope.allowPrevious = true;
+            $http.get('lists').then(function(response) {
+              $rootScope.lists = response.data;
+            });
+          }
+
+        });
+      } else {
+        ui.cancel();
+      }
 
     }])
     .controller('Page2Ctrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
@@ -101,12 +109,6 @@ function init(config) {
     .controller('Page3Ctrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http){
       var state = $rootScope.state = $rootScope.state || {};
 
-      // the creds should always be there since they're from AP
-      if (config.credential) {
-        $http.post('credential', config.credential);
-      } else {
-        ui.cancel();
-      }
 
     }])
     .controller('Page4Ctrl', ['$scope', '$rootScope', '$http', function($scope, $rootScope, $http) {
