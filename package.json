@@ -28,6 +28,7 @@
     "express-session": "^1.15.3",
     "lodash": "^3.10.1",
     "request": "^2.81.0",
+    "suppressionlist": "^0",
     "webpack": "^3.0.0",
     "webpack-dev-middleware": "^1.11.0"
   },
