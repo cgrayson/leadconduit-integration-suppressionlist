@@ -15,34 +15,38 @@ function init(config) {
     .controller('Page1Ctrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
       var state = $rootScope.state = $rootScope.state || {};
 
-      $rootScope.config = config;
-      $rootScope.cancel = ui.cancel;
+      $scope.loading = true;
+      $http.post('credential', config.credential).then(function() {
+        $scope.loading = false;
+        $rootScope.config = config;
+        $rootScope.cancel = ui.cancel;
 
-      if (config.integration) {
-        state.action = _.last(config.integration.split('.'));
-      }
-
-      if (state.action == 'is_unique') {
-        setTimeout(function() { $rootScope.changePage(3); }, 0);
-      } else {
-        $rootScope.allowPrevious = true;
-        $http.get('lists').then(function(response) {
-          $rootScope.lists = response.data;
-        });
-      }
-
-      $rootScope.startOver = function() {
-        state.action = '';
-        $scope.changePage(1);
-      };
-
-      $scope.jump = function() {
-        if(state.action == 'is_unique') {
-          $scope.changePage(3);
-        } else {
-          $scope.changePage(2);
+        if (config.integration) {
+          state.action = _.last(config.integration.split('.'));
         }
-      };
+
+        if (state.action == 'is_unique') {
+          setTimeout(function() { $rootScope.changePage(3); }, 0);
+        } else {
+          $rootScope.allowPrevious = true;
+          $http.get('lists').then(function(response) {
+            $rootScope.lists = response.data;
+          });
+        }
+
+        $rootScope.startOver = function() {
+          state.action = '';
+          $scope.changePage(1);
+        };
+
+        $scope.jump = function() {
+          if(state.action == 'is_unique') {
+            $scope.changePage(3);
+          } else {
+            $scope.changePage(2);
+          }
+        };
+      });
 
     }])
     .controller('Page2Ctrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {

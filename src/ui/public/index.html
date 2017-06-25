@@ -38,28 +38,31 @@
   </div>
   <pages>
     <page ng-controller="Page1Ctrl">
-      <div class="modal-body">
-        <form>
-        <p>Which action would you like to perform?</p>
-          <ul>
-            <li>
-              <label><input type="radio" ng-model="state.action" value="add_item">Add an item to a list</label>
-            </li>
-            <li>
-              <label><input type="radio" ng-model="state.action" value="delete_item">Delete an item from a list</label>
-            </li>
-            <li>
-              <label><input type="radio" ng-model="state.action" value="query_item">Query a list for an item</label>
-            </li>
-            <li>
-              <label><input type="radio" ng-model="state.action" value="is_unique">Query a list and add an item if not found</label>
-            </li>
-          </ul>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="primary" ng-click="jump()" ng-disabled="!state.action">Next</button>
-        <button ng-click="cancel()" class="tertiary-control">Cancel</button>
+      <div class="loading-page" ng-if="loading"><span class="loading"></span></div>
+      <div ng-if="!loading">
+        <div class="modal-body">
+          <form>
+          <p>Which action would you like to perform?</p>
+            <ul>
+              <li>
+                <label><input type="radio" ng-model="state.action" value="add_item">Add an item to a list</label>
+              </li>
+              <li>
+                <label><input type="radio" ng-model="state.action" value="delete_item">Delete an item from a list</label>
+              </li>
+              <li>
+                <label><input type="radio" ng-model="state.action" value="query_item">Query a list for an item</label>
+              </li>
+              <li>
+                <label><input type="radio" ng-model="state.action" value="is_unique">Query a list and add an item if not found</label>
+              </li>
+            </ul>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="primary" ng-click="jump()" ng-disabled="!state.action">Next</button>
+          <button ng-click="cancel()" class="tertiary-control">Cancel</button>
+        </div>
       </div>
     </page>
     <page ng-controller="Page2Ctrl">
