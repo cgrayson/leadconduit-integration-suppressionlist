@@ -5,9 +5,9 @@ module.exports =
   new Router()
     .use((req, res, next) => {
       res.locals.client = new Client(req.session.credential.token, process.env.NODE_ENV);
-      next()
+      next();
     })
-    .get('/lists', (req, res, next) => {
+    .get('/', (req, res, next) => {
       const client = res.locals.client;
       client.getLists((err, lists) => {
         if (err) {

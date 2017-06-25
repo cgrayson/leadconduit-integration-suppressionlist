@@ -75,11 +75,13 @@ const responseVariables = () => {
     { name: 'is_unique.outcome', type: 'string' },
     { name: 'is_unique.reason', type: 'string' }
   ];
-  const queryVars = queryItem.response.variables().forEach((v) => {
+  const queryVars = queryItem.response.variables().map((v) => {
     v.name = `is_unique.${v.name}`;
+    return v;
   });
-  const addVars = addItem.response.variables().forEach((v) => {
+  const addVars = addItem.response.variables().map((v) => {
     v.name = `is_unique.${v.name}`;
+    return v;
   });
 
   return vars.concat(queryVars).concat(addVars);

@@ -38,7 +38,61 @@
   </div>
   <pages>
     <page ng-controller="Page1Ctrl">
-      <div class="modal-body" ng-if="state.action == 'is_unique'">
+      <div class="modal-body">
+        <form>
+        <p>Which action would you like to perform?</p>
+          <ul>
+            <li>
+              <label><input type="radio" ng-model="state.action" value="add_item">Add an item to a list</label>
+            </li>
+            <li>
+              <label><input type="radio" ng-model="state.action" value="delete_item">Delete an item from a list</label>
+            </li>
+            <li>
+              <label><input type="radio" ng-model="state.action" value="query_item">Query a list for an item</label>
+            </li>
+            <li>
+              <label><input type="radio" ng-model="state.action" value="is_unique">Query a list and add an item if not found</label>
+            </li>
+          </ul>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="primary" ng-click="jump()" ng-disabled="!state.action">Next</button>
+        <button ng-click="cancel()" class="tertiary-control">Cancel</button>
+      </div>
+    </page>
+    <page ng-controller="Page2Ctrl">
+      <div class="modal-body">
+        <form>
+          <ul ng-if="error">
+            <li class="message-banner error" ng-bind="error"></li>
+          </ul>
+          <ul>
+            <li>
+              <label ng-if="state.action == 'add_item'">Which list do you want to add an item to?</label>
+              <label ng-if="state.action == 'query_item'">Which list do you want to query?</label>
+              <label ng-if="state.action == 'delete_item'">Which list do you want to delete an item from?</label>
+              <select ng-options="list.url_name as list.name for list in lists" ng-model="state.list_name">
+                <option value="">- Select -</option>
+              </select>
+            </li>
+            <li>
+              <label>What field do you want to use to {{ fieldListText[state.action] }} your list?</label>
+              <select ng-options="field.value as field.text for field in config.flow.fields" ng-model="state.value">
+                <option value="">- Select -</option>
+              </select>
+            </li>
+          </ul>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="primary" ng-click="finish()" ng-disabled="!state.list_name || !state.value">Next</button>
+        <button ng-click="cancel()" class="tertiary-control">Cancel</button>
+      </div>
+    </page>
+    <page ng-controller="Page3Ctrl">
+      <div class="modal-body">
         <p>
           SuppressionList will check for unique leads and prevent them from being
           delivered again.
@@ -50,7 +104,7 @@
           <ul>
             <li>
               <label>What field do you want to use to check for duplicates?</label>
-              <select ng-options="field.value as field.text for field in config.flow.fields" ng-model="state.values">
+              <select ng-options="field.value as field.text for field in config.flow.fields" ng-model="state.value">
                 <option value="">- Select -</option>
               </select>
             </li>
@@ -58,11 +112,12 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button class="primary" ng-click="next()" ng-disabled="!state.values ">Next</button>
+        <button ng-if="allowPrevious" ng-click="startOver()">Previous</button>
+        <button class="primary" ng-click="next()" ng-disabled="!state.value">Next</button>
         <button ng-click="cancel()" class="tertiary-control">Cancel</button>
       </div>
     </page>
-    <page ng-controller="Page2Ctrl">
+    <page ng-controller="Page4Ctrl">
       <div class="modal-body">
         <form>
           <p>
@@ -84,6 +139,7 @@
         </form>
       </div>
       <div class="modal-footer">
+        <prev></prev>
         <button class="primary" ng-click="finish()" ng-disabled="!state.action || finishing" ng-class="{ processing: finishing }">OK</button>
         <button ng-click="cancel()" class="tertiary-control">Cancel</button>
       </div>
