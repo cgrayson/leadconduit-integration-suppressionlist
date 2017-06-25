@@ -71,7 +71,18 @@ const requestVariables = () => {
 };
 
 const responseVariables = () => {
-  return queryItem.response.variables().concat(addItem.response.variables());
+  const vars = [
+    { name: 'is_unique.outcome', type: 'string' },
+    { name: 'is_unique.reason', type: 'string' }
+  ];
+  const queryVars = queryItem.response.variables().forEach((v) => {
+    v.name = `is_unique.${v.name}`;
+  });
+  const addVars = addItem.response.variables().forEach((v) => {
+    v.name = `is_unique.${v.name}`;
+  });
+
+  return vars.concat(queryVars).concat(addVars);
 };
 
 const name = 'Query and Add Missing Item';
