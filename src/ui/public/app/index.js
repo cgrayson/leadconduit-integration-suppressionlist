@@ -70,31 +70,43 @@ function init(config) {
 
       // Finalization and communicating to the user what's next
       $rootScope.finish = function(){
-        $http.post('ensure_list', {
-          name: 'Duplicate Checking',
-          ttl: state.ttl == 'custom' ? ((state.ttlSeconds || 0) * (state.ttlUnit || 1)) : state.ttl
-        }).then(function(response) {
-          console.log('dup', response);
-          return;
-          ui.close({
-            flow: {
-              steps: [{
-                type: 'recipient',
-                entity: {
-                  name: config.entity.name,
-                  id: config.entity.id
-                },
-                integration: {
-                  module_id: 'leadconduit-suppressionlist.outbound.' + state.action,
-                  mappings: [
-                    { property: 'values', value: '{{lead.' + state.values + '}}' },
-                    { property: 'list_name' }
-                  ]
-                }
-              }]
-            }
+        if (state.action == 'is_unique') {
+          $http.post('lists/ensure', {
+            name: 'Duplicate Checking',
+            ttl: state.ttl == 'custom' ? ((state.ttlSeconds || 0) * (state.ttlUnit || 1)) : state.ttl
+          }).then(function(response) {
+            ui.close({
+              flow: {
+                steps: [{
+                  type: 'recipient',
+                  entity: {
+                    name: config.entity.name,
+                    id: config.entity.id
+                  },
+                  integration: {
+                    module_id: 'leadconduit-suppressionlist.outbound.is_unique',
+                    mappings: [
+                      { property: 'value', value: '{{lead.' + state.values + '}}' },
+                      { property: 'list_name', value: response.data.url_name }
+                    ]
+                  }
+                }, {
+                  type: 'filter',
+                  reason: 'Duplicate lead',
+                  outcome: 'failure',
+                  rule_set: {
+                    op: 'and',
+                    rules: [{
+                      op: 'is equal to',
+                      lhv: 'suppressionlist.is_unique.outcome',
+                      rhv: 'failure'
+                    }]
+                  }
+                }]
+              }
+            });
           });
-        });
+        }
       };
 
     }]);
