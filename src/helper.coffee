@@ -9,7 +9,7 @@ getListUrlNames = (vars) ->
 
 
 getValues = (vars) ->
-  toList(vars.values or [])
+  toList(vars.values or vars.value or [])
 
 toList = (vals) ->
   vals = [vals] unless _.isArray(vals)
