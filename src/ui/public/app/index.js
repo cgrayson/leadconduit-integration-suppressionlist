@@ -66,6 +66,23 @@ function init(config) {
         delete_item: 'delete from'
       };
 
+      $scope.basicFields = _.intersectionWith(
+        _.get(config, 'flow.fields', []),
+        ['email', 'phone_1', 'phone_2', 'phone_3'],
+        function(a,b) {
+          return a.value == b;
+        }
+      );
+
+      if ($scope.basicFields.length === 0) {
+        state.value = 'other';
+      } else {
+        $scope.basicFields.push({
+          value: 'other',
+          text: 'Select another field...'
+        });
+      }
+
       // Finalization and communicating to the user what's next
       $scope.finish = function(){
         var steps = [{
@@ -77,7 +94,7 @@ function init(config) {
           integration: {
             module_id: 'leadconduit-suppressionlist.outbound.' + state.action,
             mappings: [
-              { property: 'values', value: '{{lead.' + state.value + '}}' },
+              { property: 'values', value: '{{lead.' + state.value == 'other' ? state.finalValue : state.value + '}}' },
               { property: 'list_name', value: state.list_name }
             ]
           }
@@ -114,13 +131,13 @@ function init(config) {
     .controller('Page4Ctrl', ['$scope', '$rootScope', '$http', function($scope, $rootScope, $http) {
 
       var state = $rootScope.state = $rootScope.state || {};
+
       $scope.amounts = [
-        { value: 10, text: '10 seconds' },
-        { value: 10 * 60, text: '10 minutes' },
-        { value: 60 * 60, text: '1 hour' },
         { value: 24 * 60 * 60, text: '1 day' },
         { value: 7 * 24 * 60 * 60, text: '1 week' },
         { value: 31 * 24 * 60 * 60, text: '1 month' },
+        { value: 91 * 24 * 60 * 60, text: '3 months' },
+        { value: 183 * 24 * 60 * 60, text: '6 months' },
         { value: 'custom', text: 'Custom' }
       ];
 
@@ -129,7 +146,9 @@ function init(config) {
         { value: 60, text: 'minutes' },
         { value: 60 * 60, text: 'hours' },
         { value: 24 * 60 * 60, text: 'days' },
-        { value: 7 * 24 * 60 * 60, text: 'weeks' }
+        { value: 7 * 24 * 60 * 60, text: 'weeks' },
+        { value: 30 * 24 * 60 * 60, text: 'months' },
+        { value: 365 * 24 * 60 * 60, text: 'years' }
       ];
 
       // Finalization and communicating to the user what's next
@@ -149,7 +168,7 @@ function init(config) {
                 integration: {
                   module_id: 'leadconduit-suppressionlist.outbound.is_unique',
                   mappings: [
-                    { property: 'value', value: '{{lead.' + state.value + '}}' },
+                    { property: 'value', value: '{{lead.' + state.value == 'other' ? state.finalValue : state.value + '}}' },
                     { property: 'list_name', value: response.data.url_name }
                   ]
                 }
