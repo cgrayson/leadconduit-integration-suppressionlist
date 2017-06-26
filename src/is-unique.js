@@ -3,8 +3,7 @@ const _                = require('lodash'),
       queryItem        = require('./query_item'),
       addItem          = require('./add_item'),
       helper           = require('./helper'),
-      normalizeHeaders = helper.normalizeHeaders,
-      validate         = helper.validate;
+      normalizeHeaders = helper.normalizeHeaders;
 
 
 const wrap = (integration) => {
@@ -39,8 +38,8 @@ const add = wrap(addItem);
 
 const handle = (vars, callback) => {
   const queryVars = {
-    list_names: [ vars.list_name ],
-    values: vars.value,
+    list_name: [ vars.list_name ],
+    value: vars.value,
     activeprospect: vars.activeprospect
   };
 
@@ -86,6 +85,36 @@ const responseVariables = () => {
 
   return vars.concat(queryVars).concat(addVars);
 };
+
+
+const validate = (vars) => {
+  let listName;
+  try {
+    listName = helper.getListUrlNames(vars);
+    if (listName.indexOf('|') > -1) {
+      return 'multiple lists not supported';
+    }
+  } catch (err) {
+    return 'invalid list name format';
+  }
+
+  try {
+    const values = helper.getValues(vars);
+    if (values.length === 0) {
+      return 'value required';
+    } else if (values.length > 1) {
+      return 'multiple values not supported';
+    }
+  } catch (err) {
+    return 'invalid value format';
+  }
+
+  if (!listName)
+    return 'a list name is required'
+
+};
+
+
 
 const name = 'Query and Add Missing Item';
 

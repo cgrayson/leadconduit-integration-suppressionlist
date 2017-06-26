@@ -9,7 +9,7 @@ describe 'Validate', ->
     assert.equal integration.validate(value: 'abc@outlook.com'), 'a list name is required'
 
   it 'should require value', ->
-    assert.equal integration.validate(list_name: 'mylist'), 'values must not be blank'
+    assert.equal integration.validate(list_name: 'mylist'), 'value required'
 
   it 'should pass validation', ->
     assert.isUndefined integration.validate(value: 'abc@outlook.com', list_name: 'mylist')
