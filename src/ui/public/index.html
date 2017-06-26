@@ -82,10 +82,10 @@
             </li>
             <li>
               <label>What field do you want to use to {{ fieldListText[state.action] }} your list?</label>
-              <select ng-if="state.basicFields.length" ng-options="field.value as field.text for field in state.basicFields" ng-model="state.value">
+              <select ng-show="state.basicFields.length" ng-options="field.value as field.text for field in state.basicFields" ng-model="state.value">
                 <option value="">- Select -</option>
               </select>
-              <select ng-if="state.value == 'other' || !state.basicFields.length" ng-options="field.value as field.text for field in config.flow.fields" ng-model="state.finalValue">
+              <select ng-show="state.value == 'other' || !state.basicFields.length" ng-options="field.value as field.text for field in config.flow.fields" ng-model="state.finalValue">
                 <option value="">- Select -</option>
               </select>
             </li>
@@ -111,10 +111,10 @@
           <ul>
             <li>
               <label>What field do you want to use to check for duplicates?</label>
-              <select ng-if="state.basicFields.length" ng-options="field.value as field.text for field in state.basicFields" ng-model="state.value">
+              <select ng-show="state.basicFields.length" ng-options="field.value as field.text for field in state.basicFields" ng-model="state.value">
                 <option value="">- Select -</option>
               </select>
-              <select ng-if="state.value == 'other' || !state.basicFields.length"  ng-options="field.value as field.text for field in config.flow.fields" ng-model="state.finalValue">
+              <select ng-show="state.value == 'other' || !state.basicFields.length"  ng-options="field.value as field.text for field in config.flow.fields" ng-model="state.finalValue">
                 <option value="">- Select -</option>
               </select>
             </li>
@@ -136,7 +136,7 @@
           <ul>
             <li>
               <select ng-options="time.value as time.text for time in amounts" ng-model="state.ttl">
-                <option value="">- Select -</option>
+                <option value="">Never allow duplicates</option>
               </select>
             </li>
             <li ng-if="state.ttl == 'custom'">

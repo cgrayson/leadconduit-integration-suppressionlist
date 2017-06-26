@@ -153,6 +153,7 @@ function init(config) {
 
       // Finalization and communicating to the user what's next
       $scope.finish = function(){
+        $scope.finishing = true;
         $http.post('lists/ensure', {
           name: 'Duplicate Checking',
           ttl: state.ttl == 'custom' ? ((state.ttlSeconds || 0) * (state.ttlUnit || 1)) : state.ttl
@@ -187,6 +188,8 @@ function init(config) {
               }]
             }
           });
+        }).catch(function() {
+          $scope.finishing = false;
         });
       };
 
