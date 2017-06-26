@@ -17,7 +17,7 @@ function init(config) {
 
       $scope.loading = true;
 
-      $rootScope.basicFields = _.intersectionWith(
+      state.basicFields = _.intersectionWith(
         _.get(config, 'flow.fields', []),
         ['email', 'phone_1', 'phone_2', 'phone_3'],
         function(a,b) {
@@ -25,10 +25,10 @@ function init(config) {
         }
       );
 
-      if ($rootScope.basicFields.length === 0) {
+      if (state.basicFields.length === 0) {
         state.value = 'other';
       } else {
-        $rootScope.basicFields.push({
+        state.basicFields.push({
           value: 'other',
           text: 'Select another field...'
         });
@@ -94,7 +94,7 @@ function init(config) {
           integration: {
             module_id: 'leadconduit-suppressionlist.outbound.' + state.action,
             mappings: [
-              { property: 'values', value: '{{lead.' + ((state.value == 'other' || $rootScope.basicFields.length === 0) ? state.finalValue : state.value) + '}}' },
+              { property: 'values', value: '{{lead.' + ((state.value == 'other' || state.basicFields.length === 0) ? state.finalValue : state.value) + '}}' },
               { property: 'list_name', value: state.list_name }
             ]
           }
@@ -168,7 +168,7 @@ function init(config) {
                 integration: {
                   module_id: 'leadconduit-suppressionlist.outbound.is_unique',
                   mappings: [
-                    { property: 'value', value: '{{lead.' + ((state.value == 'other' || $rootScope.basicFields.length === 0) ? state.finalValue : state.value) + '}}' },
+                    { property: 'value', value: '{{lead.' + ((state.value == 'other' || state.basicFields.length === 0) ? state.finalValue : state.value) + '}}' },
                     { property: 'list_name', value: response.data.url_name }
                   ]
                 }

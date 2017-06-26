@@ -82,10 +82,10 @@
             </li>
             <li>
               <label>What field do you want to use to {{ fieldListText[state.action] }} your list?</label>
-              <select ng-if="basicFields.length" ng-options="field.value as field.text for field in basicFields" ng-model="state.value">
+              <select ng-if="state.basicFields.length" ng-options="field.value as field.text for field in state.basicFields" ng-model="state.value">
                 <option value="">- Select -</option>
               </select>
-              <select ng-if="state.value == 'other' || !basicFields.length" ng-options="field.value as field.text for field in config.flow.fields" ng-model="state.finalValue">
+              <select ng-if="state.value == 'other' || !state.basicFields.length" ng-options="field.value as field.text for field in config.flow.fields" ng-model="state.finalValue">
                 <option value="">- Select -</option>
               </select>
             </li>
@@ -94,7 +94,7 @@
       </div>
       <div class="modal-footer">
         <prev></prev>
-        <button class="primary" ng-click="finish()" ng-disabled="!state.list_name || ((state.value == 'other' || !basicFields.length) && !state.finalValue) || !state.value">OK</button>
+        <button class="primary" ng-click="finish()" ng-disabled="!state.list_name || ((state.value == 'other' || !state.basicFields.length) && !state.finalValue) || !state.value">OK</button>
         <button ng-click="cancel()" class="tertiary-control">Cancel</button>
       </div>
     </page>
@@ -111,10 +111,10 @@
           <ul>
             <li>
               <label>What field do you want to use to check for duplicates?</label>
-              <select ng-if="basicFields.length" ng-options="field.value as field.text for field in basicFields" ng-model="state.value">
+              <select ng-if="state.basicFields.length" ng-options="field.value as field.text for field in state.basicFields" ng-model="state.value">
                 <option value="">- Select -</option>
               </select>
-              <select ng-if="state.value == 'other' || !basicFields.length"  ng-options="field.value as field.text for field in config.flow.fields" ng-model="state.finalValue">
+              <select ng-if="state.value == 'other' || !state.basicFields.length"  ng-options="field.value as field.text for field in config.flow.fields" ng-model="state.finalValue">
                 <option value="">- Select -</option>
               </select>
             </li>
@@ -123,7 +123,7 @@
       </div>
       <div class="modal-footer">
         <button ng-if="allowPrevious" ng-click="startOver()">Previous</button>
-        <button class="primary" ng-click="next()" ng-disabled="((state.value == 'other' || !basicFields.length) && !state.finalValue) || !state.value">Next</button>
+        <button class="primary" ng-click="next()" ng-disabled="((state.value == 'other' || !state.basicFields.length) && !state.finalValue) || !state.value">Next</button>
         <button ng-click="cancel()" class="tertiary-control">Cancel</button>
       </div>
     </page>
