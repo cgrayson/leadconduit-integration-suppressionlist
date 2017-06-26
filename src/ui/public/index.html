@@ -114,7 +114,7 @@
               <select ng-if="basicFields.length" ng-options="field.value as field.text for field in basicFields" ng-model="state.value">
                 <option value="">- Select -</option>
               </select>
-              <select ng-if="state.value == 'options'"  ng-options="field.value as field.text for field in config.flow.fields" ng-model="state.finalValue">
+              <select ng-if="state.value == 'other'"  ng-options="field.value as field.text for field in config.flow.fields" ng-model="state.finalValue">
                 <option value="">- Select -</option>
               </select>
             </li>

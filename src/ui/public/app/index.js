@@ -17,6 +17,23 @@ function init(config) {
 
       $scope.loading = true;
 
+      $rootScope.basicFields = _.intersectionWith(
+        _.get(config, 'flow.fields', []),
+        ['email', 'phone_1', 'phone_2', 'phone_3'],
+        function(a,b) {
+          return a.value == b;
+        }
+      );
+
+      if ($rootScope.basicFields.length === 0) {
+        state.value = 'other';
+      } else {
+        $rootScope.basicFields.push({
+          value: 'other',
+          text: 'Select another field...'
+        });
+      }
+
       $rootScope.startOver = function() {
         state.action = '';
         $scope.changePage(1);
@@ -65,23 +82,6 @@ function init(config) {
         add_item: 'add to',
         delete_item: 'delete from'
       };
-
-      $scope.basicFields = _.intersectionWith(
-        _.get(config, 'flow.fields', []),
-        ['email', 'phone_1', 'phone_2', 'phone_3'],
-        function(a,b) {
-          return a.value == b;
-        }
-      );
-
-      if ($scope.basicFields.length === 0) {
-        state.value = 'other';
-      } else {
-        $scope.basicFields.push({
-          value: 'other',
-          text: 'Select another field...'
-        });
-      }
 
       // Finalization and communicating to the user what's next
       $scope.finish = function(){
