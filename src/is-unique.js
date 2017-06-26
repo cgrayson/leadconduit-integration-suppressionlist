@@ -51,12 +51,16 @@ const handle = (vars, callback) => {
       add(vars, (err, addEvent) => {
         if (err) return callback(err);
         _.merge(event, addEvent);
-        event.outcome = 'success';
+        event.is_unique = {
+          outcome: 'success'
+        };
         callback(null, event);
       })
     } else {
-      event.outcome = 'failure';
-      event.reason = 'Duplicate';
+      event.is_unique = {
+        outcome: 'failure',
+        reason: 'Duplicate'
+      };
       callback(null, event);
     }
   })

@@ -36,8 +36,8 @@ describe 'Is Unique', ->
 
     integration.handle { activeprospect: { api_key: '123' }, list_name: 'email', value: 'hola' }, (err, event) ->
       return done(err) if err
-      assert.equal event.outcome, 'failure'
-      assert.equal event.reason, 'Duplicate'
+      assert.equal _.get(event, 'is_unique.outcome'), 'failure'
+      assert.equal _.get(event, 'is_unique.reason'), 'Duplicate'
       assert.deepEqual event.query_item,
         outcome: 'success'
         reason: null
@@ -64,8 +64,8 @@ describe 'Is Unique', ->
 
     integration.handle { activeprospect: { api_key: '123' }, list_name: 'email', value: 'hola' }, (err, event) ->
       return done(err) if err
-      assert.equal event.outcome, 'success'
-      assert.isUndefined event.reason
+      assert.equal _.get(event, 'is_unique.outcome'), 'success'
+      assert.isUndefined _.get(event, 'is_unique.reason')
       assert.deepEqual event.query_item,
         outcome: 'success'
         reason: null
