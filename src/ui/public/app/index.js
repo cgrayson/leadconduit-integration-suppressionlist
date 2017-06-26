@@ -94,7 +94,7 @@ function init(config) {
           integration: {
             module_id: 'leadconduit-suppressionlist.outbound.' + state.action,
             mappings: [
-              { property: 'values', value: '{{lead.' + state.value == 'other' ? state.finalValue : state.value + '}}' },
+              { property: 'values', value: '{{lead.' + (state.value == 'other' ? state.finalValue : state.value) + '}}' },
               { property: 'list_name', value: state.list_name }
             ]
           }
@@ -168,7 +168,7 @@ function init(config) {
                 integration: {
                   module_id: 'leadconduit-suppressionlist.outbound.is_unique',
                   mappings: [
-                    { property: 'value', value: '{{lead.' + state.value == 'other' ? state.finalValue : state.value + '}}' },
+                    { property: 'value', value: '{{lead.' + (state.value == 'other' ? state.finalValue : state.value) + '}}' },
                     { property: 'list_name', value: response.data.url_name }
                   ]
                 }
