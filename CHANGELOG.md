@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org)
 
+## [2.0.0] - 2017-07-06
+### Fixed
+- changed the request field for query item from `values` to `value`
+- changed query item to only use the first item if a comma-separated list is mapped
+
 ## [1.4.0] - 2017-06-29
 ### Added
 - new rich UI with support for fetching lists and ensuring a list exists

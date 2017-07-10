@@ -4,18 +4,17 @@ helper = require('./helper')
 request = (vars) ->
   listNames = helper.getListUrlNames(vars)
   baseUrl = helper.getBaseUrl()
-  values = helper.getValues(vars).map (v) ->
-    encodeURIComponent(v)
-  values = values.join('|')
+  value = vars.value or vars.values
+  value = encodeURIComponent(value.split(',')[0])
 
-  url: "#{baseUrl}/exists/#{listNames}/#{values}"
+  url: "#{baseUrl}/exists/#{listNames}/#{value}"
   method: 'GET'
   headers: helper.getRequestHeaders(vars.activeprospect.api_key, false)
 
 request.variables = ->
   [
     { name: 'list_names',  description: 'SuppressionList List URL Names (comma separated)', required: true, type: 'string' }
-    { name: 'values', description: 'Phone, email or other values to be looked up (comma separated)',   required: true, type: 'string' }
+    { name: 'value', description: 'Phone, email or other value to be looked up',   required: true, type: 'string' }
   ]
 
 
