@@ -7,7 +7,7 @@ describe 'Query List Item', ->
     request = null
 
     beforeEach ->
-      request = integration.request(activeprospect: {api_key: '1234'}, list_ids: 'seabass, things, more_things', values: 'boilermakers@example.com')
+      request = integration.request(activeprospect: {api_key: '1234'}, list_ids: 'seabass, things, more_things', value: 'boilermakers@example.com')
 
     it 'should have url', ->
       assert.equal request.url, 'https://app.suppressionlist.com/exists/seabass|things|more_things/boilermakers%40example.com'
@@ -15,6 +15,14 @@ describe 'Query List Item', ->
     it 'should be get', ->
       assert.equal request.method, 'GET'
 
+    it 'should use first item if multiples query values are mapped', ->
+      request = integration.request(activeprospect: {api_key: '1234'}, list_ids: 'things', value: 'test@example.com,foo@bar.com')
+      assert.equal request.url, 'https://app.suppressionlist.com/exists/things/test%40example.com'
+
+    # this change shouldn't break existing mappings
+    it 'should still support old mappings to \'values\'', ->
+      request = integration.request(activeprospect: {api_key: '1234'}, list_ids: 'things', values: 'test@example.com,foo@bar.com')
+      assert.equal request.url, 'https://app.suppressionlist.com/exists/things/test%40example.com'
 
   describe 'Response', ->
     it 'should parse JSON body', ->
