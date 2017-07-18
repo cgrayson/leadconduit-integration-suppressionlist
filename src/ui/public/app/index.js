@@ -107,9 +107,8 @@ function init(config) {
             rule_set: {
               op: 'and',
               rules: [{
-                op: 'is equal to',
-                lhv: 'suppressionlist.query_item.outcome',
-                rhv: 'failure'
+                op: 'is true',
+                lhv: 'suppressionlist.query_item.found'
               }]
             }
           });
