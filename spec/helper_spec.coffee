@@ -62,9 +62,11 @@ describe 'Helper', ->
       process.env.NODE_ENV = 'development'
       assert.equal helper.getBaseUrl(), 'http://suppressionlist.dev'
 
+    it 'should use the production url when process.env.NODE_ENV is undefined', ->
+      delete process.env.NODE_ENV
+      assert.equal helper.getBaseUrl(), 'https://app.suppressionlist.com'
 
   describe 'Validate', ->
-
     it 'should require list_ids', () ->
       assert.equal helper.validate({}), 'a list name is required'
 
@@ -81,9 +83,8 @@ describe 'Helper', ->
       lead = email: types.email.parse("")  # an empty lead.email (a String) is different than ''
       assert.equal helper.validate(list_ids: 'foo', values: lead.email), 'values must not be blank'
 
-    it 'should be satisfied with list_ids and values', () ->
+    it 'should be satisfied with list_ids, values', () ->
       assert.isUndefined helper.validate(list_ids: 'foo', values: 'bar@baz.com')
-
 
 
   describe 'Request Headers', ->
