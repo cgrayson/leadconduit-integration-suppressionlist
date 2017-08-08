@@ -1,0 +1,42 @@
+validate:
+-
+  vars: 
+    list_names: cranberries
+    value: delores@cranberries.com
+-
+  vars: 
+    list_names: cranberries
+  expected: values must not be blank
+-
+  vars: 
+    value: delores@cranberries.com
+  expected: a list name is required
+
+request:
+-
+  vars:
+    list_names: my_list
+    value: foo@bar.com
+  expected:
+    headers: 
+      Accept: application/json
+      Authorization: Basic WDpmb28=
+    method: GET
+    url: https://app.suppressionlist.com/exists/my_list/foo%40bar.com
+
+response:
+-
+  res:
+    headers:
+      Content-Type: application/json
+    status: 200
+    body: >
+      {}
+  expected:
+    query_item: 
+      outcome: success
+      reason: null
+
+extra_vars:
+  activeprospect:
+    api_key: foo

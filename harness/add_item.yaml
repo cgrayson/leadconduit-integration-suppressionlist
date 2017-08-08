@@ -1,0 +1,44 @@
+validate:
+-
+  vars:
+    list_name: cranberries
+    values: delores@cranberries.com
+-
+  vars:
+    list_name: cranberries
+  expected: values must not be blank
+-
+  vars:
+    values: delores@cranberries.com
+  expected: a list name is required
+
+request:
+-
+  vars:
+    list_name: my_list
+    values: foo@bar.com
+  expected:
+    headers:
+      Accept: application/json
+      Authorization: Basic WDpmb28=
+      Content-Type: application/json
+    method: POST
+    url: https://app.suppressionlist.com/lists/my_list/items
+    body: '{"values":["foo@bar.com"]}'
+
+response:
+-
+  res:
+    headers:
+      Content-Type: application/json
+    status: 200
+    body: >
+      {}
+  expected:
+    add_item:
+      outcome: success
+      reason: null
+
+extra_vars:
+  activeprospect:
+    api_key: foo
