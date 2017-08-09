@@ -1,11 +1,14 @@
 const express = require('express'),
       path    = require('path'),
-      webpack = require('./webpack'),
       api     = require('./api');
 
+let router = express.Router()
+  .use(express.static(path.join(__dirname, '/public')));
 
-module.exports =
-  express.Router()
-         .use(express.static(path.join(__dirname, '/public')))
-         .use(webpack)
-         .use(api);
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  router.use(require('./webpack'));
+}
+
+router.use(api);
+
+module.exports = router;

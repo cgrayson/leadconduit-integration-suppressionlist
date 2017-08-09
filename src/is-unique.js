@@ -75,8 +75,8 @@ const requestVariables = () => {
 
 const responseVariables = () => {
   const vars = [
-    { name: 'is_unique.outcome', type: 'string' },
-    { name: 'is_unique.reason', type: 'string' }
+    { name: 'is_unique.outcome', type: 'string', description: 'Success if the item checked was unique, failure if a duplicate' },
+    { name: 'is_unique.reason', type: 'string', description: 'If the outcome is not success, the reason why (e.g., "Duplicate")' }
   ];
   const queryVars = queryItem.response.variables().map((v) => {
     v.name = `is_unique.${v.name}`;

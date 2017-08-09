@@ -1,4 +1,5 @@
-src
-spec
-Cakefile
 .idea
+.nyc_output
+spec
+test
+Cakefile

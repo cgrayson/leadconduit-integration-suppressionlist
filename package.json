@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "cake test",
-    "prepublish": "cake build"
+    "prepublish": "cake build; webpack --config lib/ui/webpack.config.js",
+    "postpublish": "rm lib/ui/public/dist/*"
   },
   "repository": {
     "type": "git",
