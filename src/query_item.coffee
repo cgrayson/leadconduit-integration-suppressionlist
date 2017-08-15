@@ -15,6 +15,7 @@ request.variables = ->
   [
     { name: 'list_names',  description: 'SuppressionList List URL Names (comma separated)', required: true, type: 'string' }
     { name: 'value', description: 'Phone, email or other value to be looked up',   required: true, type: 'string' }
+    { name: 'values', description: 'Phone, email or other values to be looked up (deprecated; use "value" instead)', deprecated: true }
   ]
 
 
