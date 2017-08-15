@@ -1,7 +1,8 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org)
-## [2.0.1] - 2017-08
+
+## [2.0.3] - 2017-08-14
 ### Fixed
 - re-added `values` to query item as a deprecated field
 - fixed ui to map to `value` instead of `values` for query item
