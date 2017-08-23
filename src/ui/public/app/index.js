@@ -94,8 +94,10 @@ function init(config) {
           integration: {
             module_id: 'leadconduit-suppressionlist.outbound.' + state.action,
             mappings: [
-              { property: 'value', value: '{{lead.' + ((state.value == 'other' || state.basicFields.length === 0) ? state.finalValue : state.value) + '}}' },
-              { property: (state.action === 'query_item') ? 'list_names' : 'list_name', value: state.list_name }
+              { property: (state.action === 'query_item') ? 'value' : 'values',
+                value: '{{lead.' + ((state.value == 'other' || state.basicFields.length === 0) ? state.finalValue : state.value) + '}}' },
+              { property: (state.action === 'query_item') ? 'list_names' : 'list_name',
+                value: state.list_name }
             ]
           }
         }];

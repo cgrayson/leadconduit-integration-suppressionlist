@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org)
 
+## [2.0.4] - 2017-08-23
+### Fixed
+- fixed UI to map `values` (not `value`) for integrations other than `query_item`
+
 ## [2.0.3] - 2017-08-14
 ### Fixed
 - re-added `values` to query item as a deprecated field
