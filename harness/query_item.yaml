@@ -26,16 +26,78 @@ request:
 
 response:
 -
+  # found
   res:
     headers:
       Content-Type: application/json
     status: 200
     body: >
-      {}
+      {
+        "specified_lists": ["list_1", "list_2", "list_3"],
+        "key": "taylor@activeprospect.com",
+        "found": true,
+        "exists_in_lists": ["list_2", "list_3"],
+        "entries": [
+          {
+            "list_id" : "558dbd69021823dc0b000001",
+            "list_url_name" : "list_2",
+            "added_at" : "2015-08-27T16:18:16Z"
+          },
+          {
+            "list_id" : "558dbd69021823dc0b000002",
+            "list_url_name" : "list_3",
+            "added_at" : "2015-08-28T16:18:16Z"
+          }
+        ]
+      }
   expected:
     query_item: 
+      specified_lists:
+        - list_1
+        - list_2
+        - list_3
+      key: taylor@activeprospect.com
+      found: true
       outcome: success
       reason: null
+      found_in:
+        - list_2
+        - list_3
+      added_at: '2015-08-28T16:18:16Z'
+-
+  # error
+  res:
+    status: 400
+    headers:
+      Content-Type: application/json
+    body: >
+      {
+        "error": "No such account"
+      }
+  expected:
+    query_item:
+      outcome: error
+      reason: No such account
+-
+  # not found
+  res:
+    status: 404
+    headers:
+      Content-Type: application/json
+    body: >
+      {
+        "specified_lists": ["list_1"],
+        "key": "taylor@swift.com",
+        "found": false
+      }
+  expected:
+    query_item:
+      outcome: success
+      found: false
+      reason: null
+      key: taylor@swift.com
+      specified_lists:
+        - 'list_1'
 
 extra_vars:
   activeprospect:
