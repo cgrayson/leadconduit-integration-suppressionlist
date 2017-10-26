@@ -38,7 +38,7 @@ describe 'Is Unique', ->
       return done(err) if err
       assert.equal _.get(event, 'is_unique.outcome'), 'failure'
       assert.equal _.get(event, 'is_unique.reason'), 'Duplicate'
-      assert.deepEqual event.query_item,
+      assert.deepEqual event.is_unique.query_item,
         outcome: 'success'
         reason: null
         key: 'hola'
@@ -54,7 +54,7 @@ describe 'Is Unique', ->
     sl = nock('https://app.suppressionlist.com')
       # query not found
       .get '/exists/email/hola'
-      .reply 404, 
+      .reply 404,
         specified_lists: ['foo']
         key: 'bar'
         found: false
@@ -66,13 +66,13 @@ describe 'Is Unique', ->
       return done(err) if err
       assert.equal _.get(event, 'is_unique.outcome'), 'success'
       assert.isUndefined _.get(event, 'is_unique.reason')
-      assert.deepEqual event.query_item,
+      assert.deepEqual event.is_unique.query_item,
         outcome: 'success'
         reason: null
         specified_lists: [ 'foo' ]
         key: 'bar'
         found: false
-      assert.deepEqual event.add_item,
+      assert.deepEqual event.is_unique.add_item,
         outcome: 'success'
         reason: null
         accepted: 1
