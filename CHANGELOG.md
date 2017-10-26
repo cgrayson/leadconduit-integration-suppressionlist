@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org)
 
+## [2.0.5] - 2017-10-26
+### Fixed
+- fixed `is_unique` event structure to match response variables
+
 ## [2.0.4] - 2017-08-23
 ### Fixed
 - fixed UI to map `values` (not `value`) for integrations other than `query_item`
@@ -39,7 +43,7 @@ This project adheres to [Semantic Versioning](http://semver.org)
 
 ## [1.3.2] - 2017-01-18
 ### Fixed
-- fixed an error caused by unclosed quotes in `values` 
+- fixed an error caused by unclosed quotes in `values`
 
 ## [0.0.1] - 2014-07-17
 ### Added
