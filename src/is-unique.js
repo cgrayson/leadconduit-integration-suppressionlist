@@ -49,7 +49,6 @@ const handle = (vars, callback) => {
     const event = _.merge({is_unique: {}}, queryEvent);
     _.merge(event.is_unique, queryEvent);
 
-    console.log('event1: \n', event)
     const found = _.get(queryEvent, 'query_item.found');
     if (!found) {
       add(vars, (err, addEvent) => {
@@ -59,7 +58,6 @@ const handle = (vars, callback) => {
         _.merge(event, addEvent);
         _.merge(event.is_unique, addEvent);
 
-        console.log('event2: \n', event)
         callback(null, event);
       });
     } else {
