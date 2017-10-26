@@ -45,22 +45,19 @@ const handle = (vars, callback) => {
 
   query(queryVars, (err, queryEvent) => {
     if (err) return callback(err);
-    const event = _.merge({}, queryEvent);
+    const event = {is_unique: {}}
+    _.merge(event.is_unique, queryEvent);
+    
     const found = _.get(queryEvent, 'query_item.found');
     if (!found) {
       add(vars, (err, addEvent) => {
         if (err) return callback(err);
-        _.merge(event, addEvent);
-        event.is_unique = {
-          outcome: 'success'
-        };
+        event.is_unique.outcome = 'success';
+        _.merge(event.is_unique, addEvent);
         callback(null, event);
-      })
+      });
     } else {
-      event.is_unique = {
-        outcome: 'failure',
-        reason: 'Duplicate'
-      };
+      [event.is_unique.outcome, event.is_unique.reason] =['failure', 'Duplicate'];
       callback(null, event);
     }
   })
