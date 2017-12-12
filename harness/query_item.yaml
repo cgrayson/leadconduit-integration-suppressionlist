@@ -1,19 +1,23 @@
 validate:
 -
-  vars: 
+  should: pass
+  vars:
     list_names: cranberries
     value: delores@cranberries.com
 -
+  should: fail when missing 'value'
   vars: 
     list_names: cranberries
   expected: values must not be blank
 -
-  vars: 
+  should: fail when missing 'list_names'
+  vars:
     value: delores@cranberries.com
   expected: a list name is required
 
 request:
 -
+  should: correctly formulate the request
   vars:
     list_names: my_list
     value: foo@bar.com
@@ -27,6 +31,7 @@ request:
 response:
 -
   # found
+  should: parse JSON body
   res:
     headers:
       Content-Type: application/json
@@ -66,6 +71,7 @@ response:
       added_at: '2015-08-28T16:18:16Z'
 -
   # error
+  should: return error outcome on non-200 response status
   res:
     status: 400
     headers:
@@ -79,7 +85,7 @@ response:
       outcome: error
       reason: No such account
 -
-  # not found
+  should: return success outcome on not-found/404 response status
   res:
     status: 404
     headers:

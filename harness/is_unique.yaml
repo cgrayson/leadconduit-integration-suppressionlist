@@ -1,7 +1,6 @@
 handle:
 -
-  # hey look a big fat comment, nice
-  description: simple existence of item in list (duplicate, 'failure')
+  should: fail when item found by query
   vars:
     list_name: email
     value: hola
@@ -35,6 +34,17 @@ handle:
     is_unique:
       outcome: failure
       reason: Duplicate
+      query_item:
+        added_at: '2017-08-08T20:18:45Z'
+        found: true
+        found_in:
+          - email
+        key: hola
+        outcome: success
+        reason: null
+        specified_lists:
+          - email
+    nocks_total: 1
     query_item:
       added_at: '2017-08-08T20:18:45Z'
       found: true
@@ -46,7 +56,7 @@ handle:
       specified_lists:
         - email
 -
-  description: item not found, gets created
+  should: add when not found
   vars: &test2vars
     list_name: email
     value: donna@thedonnas.com
@@ -79,6 +89,18 @@ handle:
   expected:
     is_unique:
       outcome: success
+      query_item:
+        found: false
+        key: donna@thedonnas.com
+        outcome: success
+        reason: null
+        specified_lists:
+          - email
+      add_item:
+        outcome: success
+        accepted: 1
+        rejected: 0
+        reason: null
     query_item:
       found: false
       key: donna@thedonnas.com
@@ -91,6 +113,7 @@ handle:
       accepted: 1
       rejected: 0
       reason: null
+    nocks_total: 2
 
 extra_vars:
   activeprospect:
