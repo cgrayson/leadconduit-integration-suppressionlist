@@ -35,6 +35,16 @@ handle:
     is_unique:
       outcome: failure
       reason: Duplicate
+      query_item:
+        added_at: '2017-08-08T20:18:45Z'
+        found: true
+        found_in:
+          - email
+        key: hola
+        outcome: success
+        reason: null
+        specified_lists:
+          - email
     query_item:
       added_at: '2017-08-08T20:18:45Z'
       found: true
