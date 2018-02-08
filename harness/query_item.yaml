@@ -6,7 +6,7 @@ validate:
     value: delores@cranberries.com
 -
   should: fail when missing 'value'
-  vars: 
+  vars:
     list_names: cranberries
   expected: values must not be blank
 -
